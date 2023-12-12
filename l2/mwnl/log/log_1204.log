@@ -1,0 +1,330 @@
+
+Creating thread here /home/yuzn/small_cell_itgr/l2/src/mt/mt_ss.c 3743
+
+Set priority 99
+
+Creating thread here /home/yuzn/small_cell_itgr/l2/src/mt/mt_ss.c 3638
+
+Set priority 99
+
+Creating thread here /home/yuzn/small_cell_itgr/l2/src/mt/mt_ss.c 3638
+
+Set priority 99
+
+Creating thread here /home/yuzn/small_cell_itgr/l2/src/mt/mt_ss.c 3638
+
+Set priority 98
+
+Creating thread here /home/yuzn/small_cell_itgr/l2/src/mt/mt_ss.c 3638
+
+Set priority 98
+
+Creating thread here /home/yuzn/small_cell_itgr/l2/src/mt/mt_ss.c 3638
+
+
+date: 12/04/2023 time: 17:36:56
+
+mtss(posix): sw error:  ent: 001  inst: 000  proc id: 000 
+file: /home/yuzn/small_cell_itgr/l2/src/mt/ss_task.c line: 2455 errcode: 00446 errcls: ERRCLS_INT_PAR
+errval: 00000  errdesc: Can not set exclusive affinity for the core
+
+
+Set priority 99
+
+Creating thread here /home/yuzn/small_cell_itgr/l2/src/mt/mt_ss.c 3638
+
+Set priority 99
+
+Creating thread here /home/yuzn/small_cell_itgr/l2/src/mt/mt_ss.c 3638
+
+Set priority 99
+
+Creating thread here /home/yuzn/small_cell_itgr/l2/src/mt/mt_ss.c 3638
+
+INFO   -->  DU_APP : DU APP created and registered    to 1 sys task
+
+DEBUG   -->  EGTP : Initializing
+INFO   -->  DU_APP : EGTP created and registered     to 2 sys task
+
+DEBUG  -->  SCTP : Initializing
+INFO   -->  DU_APP : SCTP TAPA task created and registered to 6 sys task
+INFO   -->  DU_APP : RLC UL TAPA task created and registered to    4 sys task
+INFO   -->  DU_APP : SCH TAPA task created and registered to          5 sys task
+INFO   -->  DU_APP : LWR MAC TAPA task created and registered to 7 sys task
+INFO   -->  DU_APP : PHY stub slot indication TAPA task created and registered to 8 sys task
+INFO    --> DU_APP: readVnfCfg() Conpleted
+******************FINISH VNF_CFG_REQ **************************<MIB>
+    <systemFrameNumber>
+        000000
+    </systemFrameNumber>
+    <subCarrierSpacingCommon><scs30or120/></subCarrierSpacingCommon>
+    <ssb-SubcarrierOffset>0</ssb-SubcarrierOffset>
+    <dmrs-TypeA-Position><pos2/></dmrs-TypeA-Position>
+    <pdcch-ConfigSIB1>
+        <controlResourceSetZero>0</controlResourceSetZero>
+        <searchSpaceZero>0</searchSpaceZero>
+    </pdcch-ConfigSIB1>
+    <cellBarred><notBarred/></cellBarred>
+    <intraFreqReselection><notAllowed/></intraFreqReselection>
+    <spare>
+        0
+    </spare>
+</MIB>
+
+encbufSize:3
+2	0	c	
+<BCCH-DL-SCH-Message>
+    <message>
+        <c1>
+            <systemInformationBlockType1>
+                <cellSelectionInfo>
+                    <q-RxLevMin>-50</q-RxLevMin>
+                    <q-RxLevMinSUL>-50</q-RxLevMinSUL>
+                    <q-QualMin>-30</q-QualMin>
+                </cellSelectionInfo>
+                <cellAccessRelatedInfo>
+                    <plmn-IdentityList>
+                        <PLMN-IdentityInfo>
+                            <plmn-IdentityList>
+                                <PLMN-IdentitY>
+                                    <mcc>
+                                        <MCC-MNC-Digit>3</MCC-MNC-Digit>
+                                        <MCC-MNC-Digit>1</MCC-MNC-Digit>
+                                        <MCC-MNC-Digit>1</MCC-MNC-Digit>
+                                    </mcc>
+                                    <mnc>
+                                        <MCC-MNC-Digit>4</MCC-MNC-Digit>
+                                        <MCC-MNC-Digit>8</MCC-MNC-Digit>
+                                        <MCC-MNC-Digit>0</MCC-MNC-Digit>
+                                    </mnc>
+                                </PLMN-IdentitY>
+                            </plmn-IdentityList>
+                            <trackingAreaCode>
+                                000000010000000000000000
+                            </trackingAreaCode>
+                            <ranac>1</ranac>
+                            <cellIdentity>
+                                000000000000000000000000000000000001
+                            </cellIdentity>
+                            <cellReservedForOperatorUse><notReserved/></cellReservedForOperatorUse>
+                        </PLMN-IdentityInfo>
+                    </plmn-IdentityList>
+                </cellAccessRelatedInfo>
+                <connEstFailureControl>
+                    <connEstFailCount><n3/></connEstFailCount>
+                    <connEstFailOffsetValidity><s900/></connEstFailOffsetValidity>
+                    <connEstFailOffset>15</connEstFailOffset>
+                </connEstFailureControl>
+                <si-SchedulingInfo>
+                    <schedulingInfoList>
+                        <SchedulingInfo>
+                            <si-BroadcastStatus><broadcasting/></si-BroadcastStatus>
+                            <si-Periodicity><rf8/></si-Periodicity>
+                            <sib-MappingInfo>
+                                <SIB-TypeInfo>
+                                    <type><sibType2/></type>
+                                    <valueTag>10</valueTag>
+                                </SIB-TypeInfo>
+                            </sib-MappingInfo>
+                        </SchedulingInfo>
+                    </schedulingInfoList>
+                    <si-WindowLength><s5/></si-WindowLength>
+                </si-SchedulingInfo>
+                <servingCellConfigCommon>
+                    <downlinkConfigCommon>
+                        <frequencyInfoDL>
+                            <frequencyBandList>
+                                <NR-MultiBandInfo>
+                                    <freqBandIndicatorNR>78</freqBandIndicatorNR>
+                                </NR-MultiBandInfo>
+                            </frequencyBandList>
+                            <offsetToPointA>24</offsetToPointA>
+                            <scs-SpecificCarrierList>
+                                <SCS-SpecificCarrier>
+                                    <offsetToCarrier>0</offsetToCarrier>
+                                    <subcarrierSpacing><kHz30/></subcarrierSpacing>
+                                    <carrierBandwidth>100</carrierBandwidth>
+                                </SCS-SpecificCarrier>
+                            </scs-SpecificCarrierList>
+                        </frequencyInfoDL>
+                        <initialDownlinkBWP>
+                            <genericParameters>
+                                <locationAndBandwidth>28875</locationAndBandwidth>
+                                <subcarrierSpacing><kHz30/></subcarrierSpacing>
+                            </genericParameters>
+                            <pdcch-ConfigCommon>
+                                <setup>
+                                    <controlResourceSetZero>0</controlResourceSetZero>
+                                    <searchSpaceZero>0</searchSpaceZero>
+                                    <commonSearchSpaceList>
+                                        <SearchSpace>
+                                            <searchSpaceId>1</searchSpaceId>
+                                            <controlResourceSetId>0</controlResourceSetId>
+                                            <monitoringSlotPeriodicityAndOffset>
+                                                <sl1></sl1>
+                                            </monitoringSlotPeriodicityAndOffset>
+                                            <monitoringSymbolsWithinSlot>
+                                                10000000000000
+                                            </monitoringSymbolsWithinSlot>
+                                            <nrofCandidates>
+                                                <aggregationLevel1><n8/></aggregationLevel1>
+                                                <aggregationLevel2><n4/></aggregationLevel2>
+                                                <aggregationLevel4><n2/></aggregationLevel4>
+                                                <aggregationLevel8><n1/></aggregationLevel8>
+                                                <aggregationLevel16><n0/></aggregationLevel16>
+                                            </nrofCandidates>
+                                        </SearchSpace>
+                                    </commonSearchSpaceList>
+                                    <searchSpaceSIB1>1</searchSpaceSIB1>
+                                    <pagingSearchSpace>1</pagingSearchSpace>
+                                    <ra-SearchSpace>1</ra-SearchSpace>
+                                </setup>
+                            </pdcch-ConfigCommon>
+                            <pdsch-ConfigCommon>
+                                <setup>
+                                    <pdsch-TimeDomainAllocationList>
+                                        <PDSCH-TimeDomainResourceAllocation>
+                                            <k0>0</k0>
+                                            <mappingType><typeA/></mappingType>
+                                            <startSymbolAndLength>66</startSymbolAndLength>
+                                        </PDSCH-TimeDomainResourceAllocation>
+                                        <PDSCH-TimeDomainResourceAllocation>
+                                            <k0>1</k0>
+                                            <mappingType><typeA/></mappingType>
+                                            <startSymbolAndLength>66</startSymbolAndLength>
+                                        </PDSCH-TimeDomainResourceAllocation>
+                                    </pdsch-TimeDomainAllocationList>
+                                </setup>
+                            </pdsch-ConfigCommon>
+                        </initialDownlinkBWP>
+                        <bcch-Config>
+                            <modificationPeriodCoeff><n16/></modificationPeriodCoeff>
+                        </bcch-Config>
+                        <pcch-Config>
+                            <defaultPagingCycle><rf256/></defaultPagingCycle>
+                            <nAndPagingFrameOffset>
+                                <oneT></oneT>
+                            </nAndPagingFrameOffset>
+                            <ns><one/></ns>
+                            <firstPDCCH-MonitoringOccasionOfPO>
+                                <sCS30KHZoneT-SCS15KHZhalfT>
+                                    <INTEGER>44</INTEGER>
+                                </sCS30KHZoneT-SCS15KHZhalfT>
+                            </firstPDCCH-MonitoringOccasionOfPO>
+                        </pcch-Config>
+                    </downlinkConfigCommon>
+                    <uplinkConfigCommon>
+                        <frequencyInfoUL>
+                            <scs-SpecificCarrierList>
+                                <SCS-SpecificCarrier>
+                                    <offsetToCarrier>0</offsetToCarrier>
+                                    <subcarrierSpacing><kHz30/></subcarrierSpacing>
+                                    <carrierBandwidth>100</carrierBandwidth>
+                                </SCS-SpecificCarrier>
+                            </scs-SpecificCarrierList>
+                            <p-Max>23</p-Max>
+                        </frequencyInfoUL>
+                        <initialUplinkBWP>
+                            <genericParameters>
+                                <locationAndBandwidth>28875</locationAndBandwidth>
+                                <subcarrierSpacing><kHz30/></subcarrierSpacing>
+                            </genericParameters>
+                            <rach-ConfigCommon>
+                                <setup>
+                                    <rach-ConfigGeneric>
+                                        <prach-ConfigurationIndex>88</prach-ConfigurationIndex>
+                                        <msg1-FDM><one/></msg1-FDM>
+                                        <msg1-FrequencyStart>249</msg1-FrequencyStart>
+                                        <zeroCorrelationZoneConfig>4</zeroCorrelationZoneConfig>
+                                        <preambleReceivedTargetPower>-74</preambleReceivedTargetPower>
+                                        <preambleTransMax><n200/></preambleTransMax>
+                                        <powerRampingStep><dB2/></powerRampingStep>
+                                        <ra-ResponseWindow><sl10/></ra-ResponseWindow>
+                                    </rach-ConfigGeneric>
+                                    <totalNumberOfRA-Preambles>63</totalNumberOfRA-Preambles>
+                                    <ssb-perRACH-OccasionAndCB-PreamblesPerSSB>
+                                        <one><n8/></one>
+                                    </ssb-perRACH-OccasionAndCB-PreamblesPerSSB>
+                                    <ra-ContentionResolutionTimer><sf64/></ra-ContentionResolutionTimer>
+                                    <rsrp-ThresholdSSB>31</rsrp-ThresholdSSB>
+                                    <prach-RootSequenceIndex>
+                                        <l139>0</l139>
+                                    </prach-RootSequenceIndex>
+                                    <msg1-SubcarrierSpacing><kHz30/></msg1-SubcarrierSpacing>
+                                    <restrictedSetConfig><unrestrictedSet/></restrictedSetConfig>
+                                </setup>
+                            </rach-ConfigCommon>
+                            <pusch-ConfigCommon>
+                                <setup>
+                                    <pusch-TimeDomainAllocationList>
+                                        <PUSCH-TimeDomainResourceAllocation>
+                                            <k2>4</k2>
+                                            <mappingType><typeA/></mappingType>
+                                            <startSymbolAndLength>66</startSymbolAndLength>
+                                        </PUSCH-TimeDomainResourceAllocation>
+                                        <PUSCH-TimeDomainResourceAllocation>
+                                            <k2>5</k2>
+                                            <mappingType><typeA/></mappingType>
+                                            <startSymbolAndLength>66</startSymbolAndLength>
+                                        </PUSCH-TimeDomainResourceAllocation>
+                                    </pusch-TimeDomainAllocationList>
+                                    <msg3-DeltaPreamble>0</msg3-DeltaPreamble>
+                                    <p0-NominalWithGrant>-70</p0-NominalWithGrant>
+                                </setup>
+                            </pusch-ConfigCommon>
+                            <pucch-ConfigCommon>
+                                <setup>
+                                    <pucch-ResourceCommon>0</pucch-ResourceCommon>
+                                    <pucch-GroupHopping><neither/></pucch-GroupHopping>
+                                    <p0-nominal>-74</p0-nominal>
+                                </setup>
+                            </pucch-ConfigCommon>
+                        </initialUplinkBWP>
+                        <timeAlignmentTimerCommon><infinity/></timeAlignmentTimerCommon>
+                    </uplinkConfigCommon>
+                    <ssb-PositionsInBurst>
+                        <inOneGroup>
+                            11000000
+                        </inOneGroup>
+                    </ssb-PositionsInBurst>
+                    <ssb-PeriodicityServingCell><ms20/></ssb-PeriodicityServingCell>
+                    <tdd-UL-DL-ConfigurationCommon>
+                        <referenceSubcarrierSpacing><kHz30/></referenceSubcarrierSpacing>
+                        <pattern1>
+                            <dl-UL-TransmissionPeriodicity><ms5/></dl-UL-TransmissionPeriodicity>
+                            <nrofDownlinkSlots>7</nrofDownlinkSlots>
+                            <nrofDownlinkSymbols>12</nrofDownlinkSymbols>
+                            <nrofUplinkSlots>2</nrofUplinkSlots>
+                            <nrofUplinkSymbols>1</nrofUplinkSymbols>
+                        </pattern1>
+                    </tdd-UL-DL-ConfigurationCommon>
+                    <ss-PBCH-BlockPower>0</ss-PBCH-BlockPower>
+                </servingCellConfigCommon>
+            </systemInformationBlockType1>
+        </c1>
+    </message>
+</BCCH-DL-SCH-Message>
+
+encbufSize: 88
+7c	3	28	ffffffa3	40	61	31	1a	40	0	ffffff80	0	0	ffffff80	0	0	0	f	7f	0	0	20	28	12	10	ffffff9a	3	0	0	4	ffffffc6	ffffffce	19	66	ffffffbb	0	36	4	2	0	f	11	0	ffffff82	d	18	8	50	50	ffffff9b	ffffff88	ffffff82	ffffffc1	0	0	13	1e	ffffffae	70	ffffffcb	36	ffffffa2	ffffffc0	fffffff9	48	a	67	ffffffcc	79	fffffff8	1	27	18	ffffff88	51	50	ffffff8c	25	40	ffffff80	ffffffec	4	16	3	ffffffe0	8	5e	0	
+<BCCH-BCH-Message>
+    <message>
+        <mib>
+            <systemFrameNumber>
+                000000
+            </systemFrameNumber>
+            <subCarrierSpacingCommon><scs30or120/></subCarrierSpacingCommon>
+            <ssb-SubcarrierOffset>0</ssb-SubcarrierOffset>
+            <dmrs-TypeA-Position><pos2/></dmrs-TypeA-Position>
+            <pdcch-ConfigSIB1>
+                <controlResourceSetZero>0</controlResourceSetZero>
+                <searchSpaceZero>0</searchSpaceZero>
+            </pdcch-ConfigSIB1>
+            <cellBarred><notBarred/></cellBarred>
+            <intraFreqReselection><notAllowed/></intraFreqReselection>
+            <spare>
+                0
+            </spare>
+        </mib>
+    </message>
+</BCCH-BCH-Message>

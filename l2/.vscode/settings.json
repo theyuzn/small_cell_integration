@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "vendor_ext.h": "c",
+        "vnf_intgr_mwnl.h": "c",
+        "nfapi_vnf_interface.h": "c",
+        "*.x": "c",
+        "stdint.h": "c",
+        "assertions.h": "c",
+        "nfapi_vnf.h": "c",
+        "gnb_ind_vars.h": "c",
+        "type_def.h": "c",
+        "*.tcc": "c",
+        "cassert": "c"
+    }
+}

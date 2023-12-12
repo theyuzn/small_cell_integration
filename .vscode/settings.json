@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+        "queue_t.h": "c",
+        "*.x": "c",
+        "sn-fieldlengtham.h": "c",
+        "rlc-bearerconfig.h": "c",
+        "t-pollretransmit.h": "c",
+        "nfapi_vnf_interface.h": "c",
+        "lwr_mac_fsm.h": "c",
+        "vnf_p7.h": "c",
+        "*.tcc": "c",
+        "array": "c",
+        "string": "c",
+        "string_view": "c"
+    }
+}

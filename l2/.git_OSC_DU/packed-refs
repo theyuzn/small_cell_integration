@@ -1,0 +1,14 @@
+# pack-refs with: peeled fully-peeled sorted 
+2e947aab8340b0f2cced69217f2378badeb716f2 refs/remotes/origin/Amber
+3c9708a9345d83ece224ce89ecdd0af32e2a2ef0 refs/remotes/origin/D
+0fefe316c083a92b17adbd931e045a910fc42b5c refs/remotes/origin/ODU_Dev_O1
+e3e69f80b7dccffcf4b26cdef86017901cda2385 refs/remotes/origin/bronze
+09982274f6b1216043e5513dd1f2b1669dd5a98c refs/remotes/origin/cherry
+3a5197157c8a4ff70f26254c70ea0bbb2482423b refs/remotes/origin/e-release
+9c16738ac3ee3544636a298fc40171c98026f137 refs/remotes/origin/f-release
+a6fdf00681f781fbccf7aa4bf95582f20e3039bb refs/remotes/origin/g-release
+04d3fabd57b479ad8ec2c5cb7f92924670c55546 refs/remotes/origin/h-release
+55fc3c14a0c74c8c3d3dfec9e843776e7891f2de refs/remotes/origin/master
+fc9632ea69082c495f32509c2bc1c4744cb38a86 refs/remotes/origin/sch_slice_based
+cadd6293ca74f1fdf1a1fe4c41038118dee71098 refs/tags/1.0.1
+^2e947aab8340b0f2cced69217f2378badeb716f2
