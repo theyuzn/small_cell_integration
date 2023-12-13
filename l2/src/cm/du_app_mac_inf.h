@@ -96,7 +96,7 @@
 /* ======== small cell integration ======== */
 #ifdef NFAPI
 #include "nfapi_vnf_interface.h"
-#define EVENT_MAC_VNF_CONFIG_REQ     22000 // A Largest number for now
+#define EVENT_MAC_VNF_CONFIG_REQ     255 // A Largest number for now
 #endif // NFAPI
 /* ======================================== */
 
