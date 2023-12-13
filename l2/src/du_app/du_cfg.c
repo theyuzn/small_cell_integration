@@ -1124,7 +1124,7 @@ uint8_t readVnfCfg()
 
    // config->codec_config.allocate = &vnf_allocate;
    // config->codec_config.deallocate = &vnf_deallocate;
-   DU_LOG("\nINFO    --> DU_APP: readVnfCfg() Conpleted");
+   DU_LOG("\nINFO    --> [NFAPI] DU_APP: readVnfCfg() Conpleted");
    return ROK;
 }
 #endif //NFAPI
@@ -1291,6 +1291,7 @@ uint8_t duReadCfg()
    return ROK;
 }
 
+#ifdef NFAPI
 /*******************************************************************
  *
  * @brief Post VNF config req to du_app
@@ -1338,9 +1339,10 @@ uint8_t vnfCfgReq(){
       DU_LOG("\nERROR  -->  DU_APP : ODU_POST_TASK VNF failed in vnfCfgReq");
       return RFAILED;
    }
-   DU_LOG("\n******************FINISH VNF_CFG_REQ **************************");
+   DU_LOG("\n\n******************FINISH VNF_CFG_REQ **************************\n\n");
    return ROK;
 }
+#endif
 /**********************************************************************
   End of file
  **********************************************************************/

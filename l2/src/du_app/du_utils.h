@@ -44,7 +44,7 @@
 
 /* ======== small cell integration ======== */
 #ifdef NFAPI
-#define EVT_VNF_CFG     2000
+#define EVT_VNF_CFG     200
 #endif
 /********************************************/
 
