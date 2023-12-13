@@ -92,7 +92,8 @@ typedef struct {
 
 } pnf_info;
 
-typedef struct mac {
+typedef struct mac mac_t;
+typedef struct mac{
 
   void *user_data;
 

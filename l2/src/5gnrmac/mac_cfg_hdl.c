@@ -151,7 +151,7 @@ uint8_t SchSendCfgCfm(Pst *pst, RgMngmt  *cfm)
 uint8_t MacProcVnfCfgReq(Pst* pst, vnf_cfg_t *nfapi_vnf_config)
 {
    DU_LOG("\nINFO  -->  LWR_MAC : Calling MacProcVnfCfgReq");
-   sendToLowerMac(VNF_START_CFG_REQUEST, 0, (void*)vnf_config);
+   sendToLowerMac(VNF_START_CFG_REQUEST, 0, (void*)nfapi_vnf_config);
 
    return ROK;
 }

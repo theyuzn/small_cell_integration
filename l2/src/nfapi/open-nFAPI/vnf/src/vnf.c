@@ -462,6 +462,7 @@ void vnf_nr_handle_param_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_conf
 			{
 				/* ======== small cell intergartion ========*/
 				#ifdef NFAPI
+				extern PNF_Lock_t *pnf_state_lock;
 				intgr_resp = &msg;
                 intgr_p5_idx = p5_idx;
                 

@@ -82,7 +82,7 @@ uint8_t packMacVnfCfg(Pst* pst, vnf_cfg_t* vnf_config)
 uint8_t unpackDuMacVnfCfg(DuMacVnfCfgReq func, Pst* pst, Buffer* mBuf)
 {
     uint16_t ret = ROK;
-    p5_p7_cfg* vnf_config;
+    vnf_cfg_t* vnf_config;
 
     if (pst->selector == ODU_SELECTOR_LWLC)
     {

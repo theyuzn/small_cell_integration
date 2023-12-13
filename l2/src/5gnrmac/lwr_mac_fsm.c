@@ -96,7 +96,7 @@ void lwrMacLayerInit(Region region, Pool pool)
    lwrMacCb.phyState = PHY_STATE_IDLE;
 
 #ifdef NFAPI
-   lwrMacCb.phfState = PNF_STATE_IDLE;
+   lwrMacCb.pnfState = PNF_STATE_IDLE;
 
    pnf_state_lock = (PNF_Lock_t *)malloc(sizeof(PNF_Lock_t));
    pnf_state_lock->flag = 0;

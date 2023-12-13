@@ -1076,7 +1076,7 @@ uint8_t readCfg()
  *
  * ****************************************************************/
 
-static uint8_t readVnfCfg()
+uint8_t readVnfCfg()
 {  
    // nfapi_vnf_cfg = (vnf_cfg_t*) calloc(1, sizeof(vnf_cfg_t));
    // nfapi_vnf_cfg->vnf = (vnf_info*) calloc(1, sizeof(vnf_info));
