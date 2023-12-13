@@ -7,8 +7,6 @@
 #ifndef __TYPE_DEF_H__
 #define __TYPE_DEF_H__
 
-#ifdef NFAPI
-
 #include <stdint.h>
 #include "nfapi_interface.h"
 #include "nfapi_vnf_interface.h"
@@ -132,6 +130,5 @@ typedef struct vnf_cfg{
 	nfapi_vnf_config_t *config;
 }vnf_cfg_t;
 
-#endif //NFAPI
 #endif //__TYPE_DEF_H__
 /* End of file */

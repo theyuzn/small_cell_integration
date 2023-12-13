@@ -92,6 +92,7 @@
    if(SGetStaticBuffer(DU_APP_MEM_REGION, DU_POOL,           \
       (Data **)&_buf, (Size) _size, 0) == ROK)               \
    {                                                         \
+      DU_LOG("\n[DU UTILS] --> Gen Buffer");                 \             
       DU_MEM_LOG("DU,ALLOC_SHRABL_BUF", __FILE__, __LINE__, __FUNCTION__, _size, _buf);\
       memset((_buf), 0, _size);                      \
    }                                                         \

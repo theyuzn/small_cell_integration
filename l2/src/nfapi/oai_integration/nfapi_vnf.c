@@ -117,7 +117,7 @@ extern uint16_t sf_ahead;
 void oai_create_enb(void) {
   int bodge_counter=0;
   PHY_VARS_eNB *eNB = RC.eNB[0][0];
-  DU_LOG("[VNF] RC.eNB[0][0]. Mod_id:%d CC_id:%d nb_CC[0]:%d abstraction_flag:%d single_thread_flag:%d if_inst:%p\n", eNB->Mod_id, eNB->CC_id, RC.nb_CC[0], eNB->abstraction_flag,
+  DU_LOG("\nINFO   --> [VNF] RC.eNB[0][0]. Mod_id:%d CC_id:%d nb_CC[0]:%d abstraction_flag:%d single_thread_flag:%d if_inst:%p\n", eNB->Mod_id, eNB->CC_id, RC.nb_CC[0], eNB->abstraction_flag,
          eNB->single_thread_flag, eNB->if_inst);
   eNB->Mod_id  = bodge_counter;
   eNB->CC_id   = bodge_counter;
@@ -133,20 +133,20 @@ void oai_create_enb(void) {
   // that will result in eNB->configured being set to true.
   // See we need to wait for that to happen otherwise the NFAPI message exchanges won't contain the right parameter values
   if (RC.eNB[0][0]->if_inst==0 || RC.eNB[0][0]->if_inst->PHY_config_req==0 || RC.eNB[0][0]->if_inst->schedule_response==0) {
-    DU_LOG("RC.eNB[0][0]->if_inst->PHY_config_req is not installed - install it\n");
+    DU_LOG("\nINFO   --> RC.eNB[0][0]->if_inst->PHY_config_req is not installed - install it\n");
     install_schedule_handlers(RC.eNB[0][0]->if_inst);
   }
 
   do {
-    DU_LOG("%s() Waiting for eNB to become configured (by RRC/PHY) - need to wait otherwise NFAPI messages won't contain correct values\n", __FUNCTION__);
+    DU_LOG("\nINFO   --> %s() Waiting for eNB to become configured (by RRC/PHY) - need to wait otherwise NFAPI messages won't contain correct values\n", __FUNCTION__);
     usleep(50000);
   } while(eNB->configured != 1);
 
-  DU_LOG("%s() eNB is now configured\n", __FUNCTION__);
+  DU_LOG("\nINFO   --> %s() eNB is now configured\n", __FUNCTION__);
 }
 
 void oai_enb_init(void) {
-  DU_LOG("%s() About to call init_eNB_afterRU()\n", __FUNCTION__);
+  DU_LOG("\nINFO   --> %s() About to call init_eNB_afterRU()\n", __FUNCTION__);
   init_eNB_afterRU();
 }
 
@@ -183,23 +183,23 @@ void oai_create_gnb(void) {
   // that will result in gNB->configured being set to true.
   // See we need to wait for that to happen otherwise the NFAPI message exchanges won't contain the right parameter values
   if (RC.gNB[0]->if_inst==0 || RC.gNB[0]->if_inst->NR_PHY_config_req==0 || RC.gNB[0]->if_inst->NR_Schedule_response==0) {
-    DU_LOG("RC.gNB[0][0]->if_inst->NR_PHY_config_req is not installed - install it\n");
+    DU_LOG("\nINFO   --> RC.gNB[0][0]->if_inst->NR_PHY_config_req is not installed - install it\n");
     install_nr_schedule_handlers(RC.gNB[0]->if_inst);
   }
 
   do {
-    DU_LOG("%s() Waiting for gNB to become configured (by RRC/PHY) - need to wait otherwise NFAPI messages won't contain correct values\n", __FUNCTION__);
+    DU_LOG("\nINFO   --> %s() Waiting for gNB to become configured (by RRC/PHY) - need to wait otherwise NFAPI messages won't contain correct values\n", __FUNCTION__);
     usleep(50000);
   } while(gNB->configured != 1);
 
-  DU_LOG("%s() gNB is now configured\n", __FUNCTION__);
+  DU_LOG("\nINFO   --> %s() gNB is now configured\n", __FUNCTION__);
 }
 */
 #endif //NFAPI
 /* ==================================== */
 
 int pnf_connection_indication_cb(nfapi_vnf_config_t *config, int p5_idx) {
-  DU_LOG("[VNF] pnf connection indication idx:%d\n", p5_idx);
+  DU_LOG("\nINFO   --> [VNF] pnf connection indication idx:%d\n", p5_idx);
   // oai_create_enb(); NFAPI
   nfapi_pnf_param_request_t req;
   memset(&req, 0, sizeof(req));
@@ -209,7 +209,7 @@ int pnf_connection_indication_cb(nfapi_vnf_config_t *config, int p5_idx) {
 }
 
 int pnf_nr_connection_indication_cb(nfapi_vnf_config_t *config, int p5_idx) {
-  DU_LOG("[VNF] pnf connection indication idx:%d\n", p5_idx);
+  DU_LOG("\nINFO   --> [VNF] pnf connection indication idx:%d\n", p5_idx);
   // oai_create_gnb(); NFAPI
   nfapi_nr_pnf_param_request_t req;
   memset(&req, 0, sizeof(req));
@@ -219,7 +219,7 @@ int pnf_nr_connection_indication_cb(nfapi_vnf_config_t *config, int p5_idx) {
 }
 
 int pnf_disconnection_indication_cb(nfapi_vnf_config_t *config, int p5_idx) {
-  DU_LOG("[VNF] pnf disconnection indication idx:%d\n", p5_idx);
+  DU_LOG("\nINFO   --> [VNF] pnf disconnection indication idx:%d\n", p5_idx);
   vnf_info *vnf = (vnf_info *)(config->user_data);
   pnf_info *pnf = vnf->pnfs;
   phy_info *phy = pnf->phys;
@@ -229,7 +229,7 @@ int pnf_disconnection_indication_cb(nfapi_vnf_config_t *config, int p5_idx) {
 }
 
 int pnf_nr_param_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_nr_pnf_param_response_t *resp) {
-  DU_LOG("[VNF] pnf param response idx:%d error:%d\n", p5_idx, resp->error_code);
+  DU_LOG("\nINFO   --> [VNF] pnf param response idx:%d error:%d\n", p5_idx, resp->error_code);
   vnf_info *vnf = (vnf_info *)(config->user_data);
   pnf_info *pnf = vnf->pnfs;
 
@@ -237,11 +237,11 @@ int pnf_nr_param_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_nr_pnf_pa
     phy_info phy;
     memset(&phy,0,sizeof(phy));
     phy.index = resp->pnf_phy.phy[i].phy_config_index;
-    DU_LOG("[VNF] (PHY:%d) phy_config_idx:%d\n", i, resp->pnf_phy.phy[i].phy_config_index);
+    DU_LOG("\nINFO   --> [VNF] (PHY:%d) phy_config_idx:%d\n", i, resp->pnf_phy.phy[i].phy_config_index);
     nfapi_vnf_allocate_phy(config, p5_idx, &(phy.id));
 
     for(int j = 0; j < resp->pnf_phy.phy[i].number_of_rfs; ++j) {
-      DU_LOG("[VNF] (PHY:%d) (RF%d) %d\n", i, j, resp->pnf_phy.phy[i].rf_config[j].rf_config_index);
+      DU_LOG("\nINFO   --> [VNF] (PHY:%d) (RF%d) %d\n", i, j, resp->pnf_phy.phy[i].rf_config[j].rf_config_index);
       phy.rfs[0] = resp->pnf_phy.phy[i].rf_config[j].rf_config_index;
     }
 
@@ -252,7 +252,7 @@ int pnf_nr_param_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_nr_pnf_pa
   req.header.message_id = NFAPI_PNF_CONFIG_REQUEST;
   req.pnf_phy_rf_config.tl.tag = NFAPI_PNF_PHY_RF_TAG;
   req.pnf_phy_rf_config.number_phy_rf_config_info = 2; // pnf.phys.size();
-  DU_LOG("Hard coded num phy rf to 2\n");
+  DU_LOG("\nINFO   --> Hard coded num phy rf to 2\n");
 
   for(unsigned i = 0; i < 2; ++i) {
     req.pnf_phy_rf_config.phy_rf_config[i].phy_id = pnf->phys[i].id;
@@ -265,7 +265,7 @@ int pnf_nr_param_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_nr_pnf_pa
 }
 
 int pnf_param_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_pnf_param_response_t *resp) {
-  DU_LOG("[VNF] pnf param response idx:%d error:%d\n", p5_idx, resp->error_code);
+  DU_LOG("\nINFO   --> [VNF] pnf param response idx:%d error:%d\n", p5_idx, resp->error_code);
   vnf_info *vnf = (vnf_info *)(config->user_data);
   pnf_info *pnf = vnf->pnfs;
 
@@ -273,11 +273,11 @@ int pnf_param_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_pnf_param_re
     phy_info phy;
     memset(&phy,0,sizeof(phy));
     phy.index = resp->pnf_phy.phy[i].phy_config_index;
-    DU_LOG("[VNF] (PHY:%d) phy_config_idx:%d\n", i, resp->pnf_phy.phy[i].phy_config_index);
+    DU_LOG("\nINFO   --> [VNF] (PHY:%d) phy_config_idx:%d\n", i, resp->pnf_phy.phy[i].phy_config_index);
     nfapi_vnf_allocate_phy(config, p5_idx, &(phy.id));
 
     for(int j = 0; j < resp->pnf_phy.phy[i].number_of_rfs; ++j) {
-      DU_LOG("[VNF] (PHY:%d) (RF%d) %d\n", i, j, resp->pnf_phy.phy[i].rf_config[j].rf_config_index);
+      DU_LOG("\nINFO   --> [VNF] (PHY:%d) (RF%d) %d\n", i, j, resp->pnf_phy.phy[i].rf_config[j].rf_config_index);
       phy.rfs[0] = resp->pnf_phy.phy[i].rf_config[j].rf_config_index;
     }
 
@@ -287,7 +287,7 @@ int pnf_param_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_pnf_param_re
     rf_info rf;
     memset(&rf,0,sizeof(rf));
     rf.index = resp->pnf_rf.rf[i].rf_config_index;
-    DU_LOG("[VNF] (RF:%d) rf_config_idx:%d\n", i, resp->pnf_rf.rf[i].rf_config_index);
+    DU_LOG("\nINFO   --> [VNF] (RF:%d) rf_config_idx:%d\n", i, resp->pnf_rf.rf[i].rf_config_index);
     pnf->rfs[0] = rf;
   }
   nfapi_pnf_config_request_t req;
@@ -295,7 +295,7 @@ int pnf_param_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_pnf_param_re
   req.header.message_id = NFAPI_PNF_CONFIG_REQUEST;
   req.pnf_phy_rf_config.tl.tag = NFAPI_PNF_PHY_RF_TAG;
   req.pnf_phy_rf_config.number_phy_rf_config_info = 2; // pnf.phys.size();
-  DU_LOG("Hard coded num phy rf to 2\n");
+  DU_LOG("\nINFO   --> Hard coded num phy rf to 2\n");
 
   for(unsigned i = 0; i < 2; ++i) {
     req.pnf_phy_rf_config.phy_rf_config[i].phy_id = pnf->phys[i].id;
@@ -308,7 +308,7 @@ int pnf_param_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_pnf_param_re
 }
 
 int pnf_nr_config_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_nr_pnf_config_response_t *resp) {
-  DU_LOG("[VNF] pnf config response idx:%d resp[header[phy_id:%u message_id:%02x message_length:%u]]\n", p5_idx, resp->header.phy_id, resp->header.message_id, resp->header.message_length);
+  DU_LOG("\nINFO   --> [VNF] pnf config response idx:%d resp[header[phy_id:%u message_id:%02x message_length:%u]]\n", p5_idx, resp->header.phy_id, resp->header.message_id, resp->header.message_length);
 
   if(1) {
     nfapi_nr_pnf_start_request_t req;
@@ -333,7 +333,7 @@ int pnf_nr_config_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_nr_pnf_c
 }
 
 int pnf_config_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_pnf_config_response_t *resp) {
-  DU_LOG("[VNF] pnf config response idx:%d resp[header[phy_id:%u message_id:%02x message_length:%u]]\n", p5_idx, resp->header.phy_id, resp->header.message_id, resp->header.message_length);
+  DU_LOG("\nINFO   --> [VNF] pnf config response idx:%d resp[header[phy_id:%u message_id:%02x message_length:%u]]\n", p5_idx, resp->header.phy_id, resp->header.message_id, resp->header.message_length);
 
   if(1) {
     nfapi_pnf_start_request_t req;
@@ -363,12 +363,12 @@ int pnf_config_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_pnf_config_
 int wake_gNB_rxtx(PHY_VARS_gNB *gNB, uint16_t sfn, uint16_t slot) {
   struct timespec curr_t;
   clock_gettime(CLOCK_MONOTONIC,&curr_t);
- //DU_LOG("\n wake_gNB_rxtx before assignment sfn:%d slot:%d TIME %d.%d",sfn,slot,curr_t.tv_sec,curr_t.tv_nsec);
+ //DU_LOG("\nINFO   --> \n wake_gNB_rxtx before assignment sfn:%d slot:%d TIME %d.%d",sfn,slot,curr_t.tv_sec,curr_t.tv_nsec);
   gNB_L1_proc_t *proc=&gNB->proc;
   gNB_L1_rxtx_proc_t *L1_proc= (slot&1)? &proc->L1_proc : &proc->L1_proc_tx;
 
   NR_DL_FRAME_PARMS *fp = &gNB->frame_parms;
-  //DU_LOG("%s(eNB:%p, sfn:%d, sf:%d)\n", __FUNCTION__, eNB, sfn, sf);
+  //DU_LOG("\nINFO   --> %s(eNB:%p, sfn:%d, sf:%d)\n", __FUNCTION__, eNB, sfn, sf);
   //int i;
   struct timespec wait;
   clock_gettime(CLOCK_REALTIME, &wait);
@@ -392,7 +392,7 @@ int wake_gNB_rxtx(PHY_VARS_gNB *gNB, uint16_t sfn, uint16_t slot) {
     // Try to be 1 frame back
     old_slot = slot;
     old_sfn = sfn;
-    //DU_LOG("\n wake_gNB_rxtx after assignment sfn:%d slot:%d",proc->frame_rx,proc->slot_rx);
+    //DU_LOG("\nINFO   --> \n wake_gNB_rxtx after assignment sfn:%d slot:%d",proc->frame_rx,proc->slot_rx);
     if (old_slot == 0 && old_sfn % 100 == 0) LOG_W( PHY,"[gNB] sfn/slot:%d%d old_sfn/slot:%d%d proc[rx:%d%d]\n", sfn, slot, old_sfn, old_slot, proc->frame_rx, proc->slot_rx);
   }
 
@@ -411,7 +411,7 @@ int wake_gNB_rxtx(PHY_VARS_gNB *gNB, uint16_t sfn, uint16_t slot) {
   L1_proc->slot_tx      = (L1_proc->slot_rx + gNB->if_inst->sl_ahead)%20;
 
   //LOG_D(PHY, "sfn/sf:%d%d proc[rx:%d%d] rx:%d%d] About to wake rxtx thread\n\n", sfn, slot, proc->frame_rx, proc->slot_rx, L1_proc->frame_rx, L1_proc->slot_rx);
-  //DU_LOG("\nEntering wake_gNB_rxtx sfn %d slot %d\n",L1_proc->frame_rx,L1_proc->slot_rx);
+  //DU_LOG("\nINFO   --> \nEntering wake_gNB_rxtx sfn %d slot %d\n",L1_proc->frame_rx,L1_proc->slot_rx);
   // the thread can now be woken up
   if (pthread_cond_signal(&L1_proc->cond) != 0) {
     LOG_E( PHY, "[gNB] ERROR pthread_cond_signal for gNB RXn-TXnp4 thread\n");
@@ -429,7 +429,7 @@ int wake_eNB_rxtx(PHY_VARS_eNB *eNB, uint16_t sfn, uint16_t sf) {
   L1_proc_t *proc=&eNB->proc;
   L1_rxtx_proc_t *L1_proc= (sf&1)? &proc->L1_proc : &proc->L1_proc_tx;
   LTE_DL_FRAME_PARMS *fp = &eNB->frame_parms;
-  //DU_LOG("%s(eNB:%p, sfn:%d, sf:%d)\n", __FUNCTION__, eNB, sfn, sf);
+  //DU_LOG("\nINFO   --> %s(eNB:%p, sfn:%d, sf:%d)\n", __FUNCTION__, eNB, sfn, sf);
   //int i;
   struct timespec wait;
   wait.tv_sec=0;
@@ -522,12 +522,12 @@ extern int nfapi_sync_var;
 /* ======================================== */
 
 int phy_sync_indication(struct nfapi_vnf_p7_config *config, uint8_t sync) {
-  //DU_LOG("[VNF] SYNC %s\n", sync==1 ? "ACHIEVED" : "LOST");
+  //DU_LOG("\nINFO   --> [VNF] SYNC %s\n", sync==1 ? "ACHIEVED" : "LOST");
   /* ======== small cell integration ======== */
   /*
   if (sync==1 && nfapi_sync_var!=0) {
 
-    DU_LOG("[VNF] Signal to OAI main code that it can go\n");
+    DU_LOG("\nINFO   --> [VNF] Signal to OAI main code that it can go\n");
     pthread_mutex_lock(&nfapi_sync_mutex);
     nfapi_sync_var=0;
     pthread_cond_broadcast(&nfapi_sync_cond);
@@ -542,7 +542,7 @@ int phy_slot_indication(struct nfapi_vnf_p7_config *config, uint16_t phy_id, uin
   static uint8_t first_time = 1;
 
   if (first_time) {
-    DU_LOG("[VNF] slot indication %d\n", NFAPI_SFNSLOT2DEC(sfn, slot));
+    DU_LOG("\nINFO   --> [VNF] slot indication %d\n", NFAPI_SFNSLOT2DEC(sfn, slot));
     first_time = 0;
   }
 
@@ -554,9 +554,9 @@ int phy_slot_indication(struct nfapi_vnf_p7_config *config, uint16_t phy_id, uin
     LOG_D(PHY,"[VNF] slot indication sfn:%d slot:%d\n", sfn, slot);
     wake_gNB_rxtx(RC.gNB[0], sfn, slot); // DONE: find NR equivalent
   } else {
-    DU_LOG("[VNF] %s() RC.gNB:%p\n", __FUNCTION__, RC.gNB);
+    DU_LOG("\nINFO   --> [VNF] %s() RC.gNB:%p\n", __FUNCTION__, RC.gNB);
 
-    if (RC.gNB) DU_LOG("RC.gNB[0]->configured:%d\n", RC.gNB[0]->configured);
+    if (RC.gNB) DU_LOG("\nINFO   --> RC.gNB[0]->configured:%d\n", RC.gNB[0]->configured);
   }
   */
 
@@ -567,7 +567,7 @@ int phy_subframe_indication(struct nfapi_vnf_p7_config *config, uint16_t phy_id,
   static uint8_t first_time = 1;
 
   if (first_time) {
-    DU_LOG("[VNF] subframe indication %d\n", NFAPI_SFNSF2DEC(sfn_sf));
+    DU_LOG("\nINFO   --> [VNF] subframe indication %d\n", NFAPI_SFNSF2DEC(sfn_sf));
     first_time = 0;
   }
 
@@ -579,9 +579,9 @@ int phy_subframe_indication(struct nfapi_vnf_p7_config *config, uint16_t phy_id,
     //LOG_D(PHY,"[VNF] subframe indication sfn_sf:%d sfn:%d sf:%d\n", sfn_sf, sfn, sf);
     wake_eNB_rxtx(RC.eNB[0][0], sfn, sf);
   } else {
-    DU_LOG("[VNF] %s() RC.eNB:%p\n", __FUNCTION__, RC.eNB);
+    DU_LOG("\nINFO   --> [VNF] %s() RC.eNB:%p\n", __FUNCTION__, RC.eNB);
 
-    if (RC.eNB) DU_LOG("RC.eNB[0][0]->configured:%d\n", RC.eNB[0][0]->configured);
+    if (RC.eNB) DU_LOG("\nINFO   --> RC.eNB[0][0]->configured:%d\n", RC.eNB[0][0]->configured);
   }
   */
 
@@ -589,11 +589,11 @@ int phy_subframe_indication(struct nfapi_vnf_p7_config *config, uint16_t phy_id,
 }
 
 int phy_rach_indication(struct nfapi_vnf_p7_config *config, nfapi_rach_indication_t *ind) {
-  DU_LOG("%s() NFAPI SFN/SF:%d number_of_preambles:%u\n", __FUNCTION__, NFAPI_SFNSF2DEC(ind->sfn_sf), ind->rach_indication_body.number_of_preambles);
+  DU_LOG("\nINFO   --> %s() NFAPI SFN/SF:%d number_of_preambles:%u\n", __FUNCTION__, NFAPI_SFNSF2DEC(ind->sfn_sf), ind->rach_indication_body.number_of_preambles);
   /* ======== small cell integration ======== */
   /*
   struct PHY_VARS_eNB_s *eNB = RC.eNB[0][0];
-  DU_LOG("[VNF] RACH_IND eNB:%p sfn_sf:%d number_of_preambles:%d\n", eNB, NFAPI_SFNSF2DEC(ind->sfn_sf), ind->rach_indication_body.number_of_preambles);
+  DU_LOG("\nINFO   --> [VNF] RACH_IND eNB:%p sfn_sf:%d number_of_preambles:%d\n", eNB, NFAPI_SFNSF2DEC(ind->sfn_sf), ind->rach_indication_body.number_of_preambles);
   AssertFatal(pthread_mutex_lock(&eNB->UL_INFO_mutex)==0, "Mutex lock failed");
   if(NFAPI_MODE == NFAPI_MODE_VNF){
     int8_t index = NFAPI_SFNSF2SF(ind->sfn_sf);
@@ -606,7 +606,7 @@ int phy_rach_indication(struct nfapi_vnf_p7_config *config, nfapi_rach_indicatio
     for (int i=0; i<ind->rach_indication_body.number_of_preambles; i++) {
       if (ind->rach_indication_body.preamble_list[i].preamble_rel8.tl.tag == NFAPI_PREAMBLE_REL8_TAG) {
 
-        DU_LOG("preamble[%d]: rnti:%02x preamble:%d timing_advance:%d\n",
+        DU_LOG("\nINFO   --> preamble[%d]: rnti:%02x preamble:%d timing_advance:%d\n",
               i,
               ind->rach_indication_body.preamble_list[i].preamble_rel8.rnti,
               ind->rach_indication_body.preamble_list[i].preamble_rel8.preamble,
@@ -614,7 +614,7 @@ int phy_rach_indication(struct nfapi_vnf_p7_config *config, nfapi_rach_indicatio
               );
       }
       if(ind->rach_indication_body.preamble_list[i].preamble_rel13.tl.tag == NFAPI_PREAMBLE_REL13_TAG) {
-        DU_LOG("RACH PREAMBLE REL13 present\n");
+        DU_LOG("\nINFO   --> RACH PREAMBLE REL13 present\n");
       }
 
       UL_RCC_INFO.rach_ind[index].rach_indication_body.preamble_list[i] = ind->rach_indication_body.preamble_list[i];
@@ -625,7 +625,7 @@ int phy_rach_indication(struct nfapi_vnf_p7_config *config, nfapi_rach_indicatio
 
   for (int i=0; i<ind->rach_indication_body.number_of_preambles; i++) {
     if (ind->rach_indication_body.preamble_list[i].preamble_rel8.tl.tag == NFAPI_PREAMBLE_REL8_TAG) {
-      DU_LOG("preamble[%d]: rnti:%02x preamble:%d timing_advance:%d\n",
+      DU_LOG("\nINFO   --> preamble[%d]: rnti:%02x preamble:%d timing_advance:%d\n",
              i,
              ind->rach_indication_body.preamble_list[i].preamble_rel8.rnti,
              ind->rach_indication_body.preamble_list[i].preamble_rel8.preamble,
@@ -634,7 +634,7 @@ int phy_rach_indication(struct nfapi_vnf_p7_config *config, nfapi_rach_indicatio
     }
 
     if(ind->rach_indication_body.preamble_list[i].preamble_rel13.tl.tag == NFAPI_PREAMBLE_REL13_TAG) {
-      DU_LOG("RACH PREAMBLE REL13 present\n");
+      DU_LOG("\nINFO   --> RACH PREAMBLE REL13 present\n");
     }
 
     eNB->preamble_list[i] = ind->rach_indication_body.preamble_list[i];
@@ -679,7 +679,7 @@ int phy_nr_rach_indication(nfapi_nr_rach_indication_t *ind)
     }
     if (!put_queue(&gnb_rach_ind_queue, rach_ind))
     {
-      DU_LOG("[VNF] Put_queue failed for rach_ind\n");
+      DU_LOG("\nINFO   --> [VNF] Put_queue failed for rach_ind\n");
       for (int i = 0; i < ind->number_of_pdus; i++)
       {
         free(rach_ind->pdu_list[i].preamble_list);
@@ -689,14 +689,14 @@ int phy_nr_rach_indication(nfapi_nr_rach_indication_t *ind)
     }
   }
   else {
-    DU_LOG("[VNF] not NFAPI_MODE_VNF(2)\n");
+    DU_LOG("\nINFO   --> [VNF] not NFAPI_MODE_VNF(2)\n");
   }
   return 1;
 }
 
 int phy_nr_uci_indication(nfapi_nr_uci_indication_t *ind)
 {
-  DU_LOG("[VNF] In %s() NFAPI SFN/SF: %d/%d number_of_pdus :%u\n",
+  DU_LOG("\nINFO   --> [VNF] In %s() NFAPI SFN/SF: %d/%d number_of_pdus :%u\n",
           __FUNCTION__,ind->sfn, ind->slot, ind->num_ucis);
   /* ======== small cell integration ======= */
   #ifdef NFAPI
@@ -718,7 +718,7 @@ int phy_nr_uci_indication(nfapi_nr_uci_indication_t *ind)
 
       switch (uci_ind->uci_list[i].pdu_type) {
         case NFAPI_NR_UCI_PUSCH_PDU_TYPE:
-          DU_LOG("[VNF] %s(): unhandled NFAPI_NR_UCI_PUSCH_PDU_TYPE\n", __func__);
+          DU_LOG("\nINFO   --> [VNF] %s(): unhandled NFAPI_NR_UCI_PUSCH_PDU_TYPE\n", __func__);
           break;
 
         case NFAPI_NR_UCI_FORMAT_0_1_PDU_TYPE: {
@@ -759,7 +759,7 @@ int phy_nr_uci_indication(nfapi_nr_uci_indication_t *ind)
 
     if (!put_queue(&gnb_uci_ind_queue, uci_ind))
     {
-      DU_LOG("[VNF] Put_queue failed for uci_ind\n");
+      DU_LOG("\nINFO   --> [VNF] Put_queue failed for uci_ind\n");
       for (int i = 0; i < ind->num_ucis; i++)
       {
           if (uci_ind->uci_list[i].pdu_type == NFAPI_NR_UCI_FORMAT_0_1_PDU_TYPE)
@@ -779,7 +779,7 @@ int phy_nr_uci_indication(nfapi_nr_uci_indication_t *ind)
     }
   }
   else {
-    DU_LOG("[VNF] not NFAPI_MODE_VNF(2)\n");
+    DU_LOG("\nINFO   --> [VNF] not NFAPI_MODE_VNF(2)\n");
   }
   return 1;
 }
@@ -788,7 +788,7 @@ int phy_harq_indication(struct nfapi_vnf_p7_config *config, nfapi_harq_indicatio
   /* ======== small cell integration ======== */
   /*
   struct PHY_VARS_eNB_s *eNB = RC.eNB[0][0];
-  DU_LOG("%s() NFAPI SFN/SF:%d number_of_harqs:%u\n", __FUNCTION__, NFAPI_SFNSF2DEC(ind->sfn_sf), ind->harq_indication_body.number_of_harqs);
+  DU_LOG("\nINFO   --> %s() NFAPI SFN/SF:%d number_of_harqs:%u\n", __FUNCTION__, NFAPI_SFNSF2DEC(ind->sfn_sf), ind->harq_indication_body.number_of_harqs);
   AssertFatal(pthread_mutex_lock(&eNB->UL_INFO_mutex)==0, "Mutex lock failed");
   if(NFAPI_MODE == NFAPI_MODE_VNF){
     int8_t index = NFAPI_SFNSF2SF(ind->sfn_sf);
@@ -839,7 +839,7 @@ int phy_crc_indication(struct nfapi_vnf_p7_config *config, nfapi_crc_indication_
     for (int i=0; i<ind->crc_indication_body.number_of_crcs; i++) {
       memcpy(&UL_RCC_INFO.crc_ind[index].crc_indication_body.crc_pdu_list[i], &ind->crc_indication_body.crc_pdu_list[i], sizeof(ind->crc_indication_body.crc_pdu_list[0]));
 
-      DU_LOG("%s() NFAPI SFN/SF:%d CRC_IND:number_of_crcs:%u UL_INFO:crcs:%d PDU[%d] rnti:%04x UL_INFO:rnti:%04x\n",
+      DU_LOG("\nINFO   --> %s() NFAPI SFN/SF:%d CRC_IND:number_of_crcs:%u UL_INFO:crcs:%d PDU[%d] rnti:%04x UL_INFO:rnti:%04x\n",
           __FUNCTION__,
           NFAPI_SFNSF2DEC(ind->sfn_sf), ind->crc_indication_body.number_of_crcs, UL_RCC_INFO.crc_ind[index].crc_indication_body.number_of_crcs,
           i,
@@ -854,13 +854,13 @@ int phy_crc_indication(struct nfapi_vnf_p7_config *config, nfapi_crc_indication_
   dest_ind->crc_indication_body.crc_pdu_list = dest_pdu_list;
 
   if (ind->crc_indication_body.number_of_crcs==0)
-    DU_LOG("%s() NFAPI SFN/SF:%d IND:number_of_crcs:%u UL_INFO:crcs:%d\n", __FUNCTION__, NFAPI_SFNSF2DEC(ind->sfn_sf), ind->crc_indication_body.number_of_crcs,
+    DU_LOG("\nINFO   --> %s() NFAPI SFN/SF:%d IND:number_of_crcs:%u UL_INFO:crcs:%d\n", __FUNCTION__, NFAPI_SFNSF2DEC(ind->sfn_sf), ind->crc_indication_body.number_of_crcs,
           eNB->UL_INFO.crc_ind.crc_indication_body.number_of_crcs);
 
   assert(ind->crc_indication_body.number_of_crcs <= NFAPI_CRC_IND_MAX_PDU);
   for (int i=0; i<ind->crc_indication_body.number_of_crcs; i++) {
     memcpy(&dest_ind->crc_indication_body.crc_pdu_list[i], &ind->crc_indication_body.crc_pdu_list[i], sizeof(ind->crc_indication_body.crc_pdu_list[0]));
-    DU_LOG("%s() NFAPI SFN/SF:%d CRC_IND:number_of_crcs:%u UL_INFO:crcs:%d PDU[%d] rnti:%04x UL_INFO:rnti:%04x\n",
+    DU_LOG("\nINFO   --> %s() NFAPI SFN/SF:%d CRC_IND:number_of_crcs:%u UL_INFO:crcs:%d PDU[%d] rnti:%04x UL_INFO:rnti:%04x\n",
           __FUNCTION__,
           NFAPI_SFNSF2DEC(ind->sfn_sf), ind->crc_indication_body.number_of_crcs, eNB->UL_INFO.crc_ind.crc_indication_body.number_of_crcs,
           i,
@@ -877,7 +877,7 @@ int phy_crc_indication(struct nfapi_vnf_p7_config *config, nfapi_crc_indication_
 
 int phy_nr_crc_indication(nfapi_nr_crc_indication_t *ind) {
 
-  DU_LOG("[VNF] In %s() NFAPI SFN/SF: %d/%d number_of_pdus :%u\n",
+  DU_LOG("\nINFO   --> [VNF] In %s() NFAPI SFN/SF: %d/%d number_of_pdus :%u\n",
           __FUNCTION__,ind->sfn, ind->slot, ind->number_crcs);
 
   /* ======== small cell integration ======= */
@@ -906,19 +906,19 @@ int phy_nr_crc_indication(nfapi_nr_crc_indication_t *ind) {
       crc_ind->crc_list[j].tb_crc_status = ind->crc_list[j].tb_crc_status;
       crc_ind->crc_list[j].timing_advance = ind->crc_list[j].timing_advance;
       crc_ind->crc_list[j].ul_cqi = ind->crc_list[j].ul_cqi;
-      DU_LOG("[VNF] Received crc_ind.harq_id = %d for %d index SFN SLot %u %u with rnti %x\n",
+      DU_LOG("\nINFO   --> [VNF] Received crc_ind.harq_id = %d for %d index SFN SLot %u %u with rnti %x\n",
                     ind->crc_list[j].harq_id, j, ind->sfn, ind->slot, ind->crc_list[j].rnti);
     }
     if (!put_queue(&gnb_crc_ind_queue, crc_ind))
     {
-      DU_LOG("[VNF] Put_queue failed for crc_ind\n");
+      DU_LOG("\nINFO   --> [VNF] Put_queue failed for crc_ind\n");
       free(crc_ind->crc_list);
       free(crc_ind);
     }
   }
   else
   {
-    DU_LOG("[VNF] NFAPI_MODE = %d not NFAPI_MODE_VNF(2)\n", nfapi_getmode());
+    DU_LOG("\nINFO   --> [VNF] NFAPI_MODE = %d not NFAPI_MODE_VNF(2)\n", nfapi_getmode());
   }
   return 1;
 }
@@ -929,7 +929,7 @@ int phy_rx_indication(struct nfapi_vnf_p7_config *config, nfapi_rx_indication_t 
   struct PHY_VARS_eNB_s *eNB = RC.eNB[0][0];
 
   if (ind->rx_indication_body.number_of_pdus==0) {
-    DU_LOG("%s() NFAPI SFN/SF:%d number_of_pdus:%u\n", __FUNCTION__, NFAPI_SFNSF2DEC(ind->sfn_sf), ind->rx_indication_body.number_of_pdus);
+    DU_LOG("\nINFO   --> %s() NFAPI SFN/SF:%d number_of_pdus:%u\n", __FUNCTION__, NFAPI_SFNSF2DEC(ind->sfn_sf), ind->rx_indication_body.number_of_pdus);
   }
 
   AssertFatal(pthread_mutex_lock(&eNB->UL_INFO_mutex)==0, "Mutex lock failed");
@@ -1005,7 +1005,7 @@ int phy_rx_indication(struct nfapi_vnf_p7_config *config, nfapi_rx_indication_t 
 
 int phy_nr_rx_data_indication(nfapi_nr_rx_data_indication_t *ind) {
 
-  DU_LOG("[VNF] In %s() NFAPI SFN/SF: %d/%d number_of_pdus :%u, and pdu %p\n",
+  DU_LOG("\nINFO   --> [VNF] In %s() NFAPI SFN/SF: %d/%d number_of_pdus :%u, and pdu %p\n",
           __FUNCTION__,ind->sfn, ind->slot, ind->number_of_pdus, ind->pdu_list[0].pdu);
 
   /* ======== small cell integration ======= */
@@ -1039,14 +1039,14 @@ int phy_nr_rx_data_indication(nfapi_nr_rx_data_indication_t *ind) {
     }
     if (!put_queue(&gnb_rx_ind_queue, rx_ind))
     {
-      DU_LOG("[VNF] Put_queue failed for rx_ind\n");
+      DU_LOG("\nINFO   --> [VNF] Put_queue failed for rx_ind\n");
       free(rx_ind->pdu_list);
       free(rx_ind);
     }
   }
   else
   {
-    DU_LOG("[VNF] NFAPI_MODE = %d not NFAPI_MODE_VNF(2)\n", nfapi_getmode());
+    DU_LOG("\nINFO   --> [VNF] NFAPI_MODE = %d not NFAPI_MODE_VNF(2)\n", nfapi_getmode());
   }
   return 1;
 }
@@ -1061,7 +1061,7 @@ int phy_sr_indication(struct nfapi_vnf_p7_config *config, nfapi_sr_indication_t 
   /* ======== small cell integration ======== */
   /*
   struct PHY_VARS_eNB_s *eNB = RC.eNB[0][0];
-  DU_LOG("%s() NFAPI SFN/SF:%d srs:%d\n", __FUNCTION__, NFAPI_SFNSF2DEC(ind->sfn_sf), ind->sr_indication_body.number_of_srs);
+  DU_LOG("\nINFO   --> %s() NFAPI SFN/SF:%d srs:%d\n", __FUNCTION__, NFAPI_SFNSF2DEC(ind->sfn_sf), ind->sr_indication_body.number_of_srs);
   AssertFatal(pthread_mutex_lock(&eNB->UL_INFO_mutex)==0, "Mutex lock failed");
   if(NFAPI_MODE == NFAPI_MODE_VNF){
     int8_t index = NFAPI_SFNSF2SF(ind->sfn_sf);
@@ -1078,7 +1078,7 @@ int phy_sr_indication(struct nfapi_vnf_p7_config *config, nfapi_sr_indication_t 
         nfapi_sr_indication_pdu_t *dest_pdu = &UL_RCC_INFO.sr_ind[index].sr_indication_body.sr_pdu_list[i];
         nfapi_sr_indication_pdu_t *src_pdu = &ind->sr_indication_body.sr_pdu_list[i];
 
-        DU_LOG("SR_IND[PDU:%d %d][rnti:%x cqi:%d channel:%d]\n", index, i, src_pdu->rx_ue_information.rnti, src_pdu->ul_cqi_information.ul_cqi, src_pdu->ul_cqi_information.channel);
+        DU_LOG("\nINFO   --> SR_IND[PDU:%d %d][rnti:%x cqi:%d channel:%d]\n", index, i, src_pdu->rx_ue_information.rnti, src_pdu->ul_cqi_information.ul_cqi, src_pdu->ul_cqi_information.channel);
 
         memcpy(dest_pdu, src_pdu, sizeof(*src_pdu));
     }
@@ -1093,7 +1093,7 @@ int phy_sr_indication(struct nfapi_vnf_p7_config *config, nfapi_sr_indication_t 
   for (int i=0; i<eNB->UL_INFO.sr_ind.sr_indication_body.number_of_srs; i++) {
     nfapi_sr_indication_pdu_t *dest_pdu = &dest_ind->sr_indication_body.sr_pdu_list[i];
     nfapi_sr_indication_pdu_t *src_pdu = &ind->sr_indication_body.sr_pdu_list[i];
-    DU_LOG("SR_IND[PDU:%d][rnti:%x cqi:%d channel:%d]\n", i, src_pdu->rx_ue_information.rnti, src_pdu->ul_cqi_information.ul_cqi, src_pdu->ul_cqi_information.channel);
+    DU_LOG("\nINFO   --> SR_IND[PDU:%d][rnti:%x cqi:%d channel:%d]\n", i, src_pdu->rx_ue_information.rnti, src_pdu->ul_cqi_information.ul_cqi, src_pdu->ul_cqi_information.channel);
     memcpy(dest_pdu, src_pdu, sizeof(*src_pdu));
   }
   }
@@ -1117,7 +1117,7 @@ static void analyze_cqi_pdus_for_duplicates(nfapi_cqi_indication_t *ind)
   {
     nfapi_cqi_indication_pdu_t *src_pdu = &ind->cqi_indication_body.cqi_pdu_list[i];
 
-    DU_LOG("CQI_IND[PDU:%d][rnti:%x cqi:%d channel:%d]\n", i, src_pdu->rx_ue_information.rnti,
+    DU_LOG("\nINFO   --> CQI_IND[PDU:%d][rnti:%x cqi:%d channel:%d]\n", i, src_pdu->rx_ue_information.rnti,
           src_pdu->ul_cqi_information.ul_cqi, src_pdu->ul_cqi_information.channel);
 
     for (int j = i + 1; j < num_cqis; j++)
@@ -1126,7 +1126,7 @@ static void analyze_cqi_pdus_for_duplicates(nfapi_cqi_indication_t *ind)
       uint16_t rnti_j = ind->cqi_indication_body.cqi_pdu_list[j].rx_ue_information.rnti;
       if (is_ue_same(rnti_i, rnti_j))
       {
-        DU_LOG("[VNF] Problem, two cqis received from a single UE for rnti %x\n",
+        DU_LOG("\nINFO   --> [VNF] Problem, two cqis received from a single UE for rnti %x\n",
               rnti_i);
         //abort(); This will be fixed in merge request which handles multiple CQIs.
       }
@@ -1140,7 +1140,7 @@ int phy_cqi_indication(struct nfapi_vnf_p7_config *config, nfapi_cqi_indication_
   // vnf_p7_info* p7_vnf = (vnf_p7_info*)(config->user_data);
   //mac_cqi_ind(p7_vnf->mac, ind);
   struct PHY_VARS_eNB_s *eNB = RC.eNB[0][0];
-  DU_LOG("%s() NFAPI SFN/SF:%d number_of_cqis:%u\n", __FUNCTION__, NFAPI_SFNSF2DEC(ind->sfn_sf), ind->cqi_indication_body.number_of_cqis);
+  DU_LOG("\nINFO   --> %s() NFAPI SFN/SF:%d number_of_cqis:%u\n", __FUNCTION__, NFAPI_SFNSF2DEC(ind->sfn_sf), ind->cqi_indication_body.number_of_cqis);
   AssertFatal(pthread_mutex_lock(&eNB->UL_INFO_mutex)==0, "Mutex lock failed");
   if(NFAPI_MODE == NFAPI_MODE_VNF){
     int8_t index = NFAPI_SFNSF2SF(ind->sfn_sf);
@@ -1159,7 +1159,7 @@ int phy_cqi_indication(struct nfapi_vnf_p7_config *config, nfapi_cqi_indication_
     assert(ind->cqi_indication_body.number_of_cqis <= NFAPI_CQI_IND_MAX_PDU);
     for (int i=0; i<ind->cqi_indication_body.number_of_cqis; i++) {
         nfapi_cqi_indication_pdu_t *src_pdu = &ind->cqi_indication_body.cqi_pdu_list[i];
-        DU_LOG("SR_IND[PDU:%d][rnti:%x cqi:%d channel:%d]\n", i, src_pdu->rx_ue_information.rnti,
+        DU_LOG("\nINFO   --> SR_IND[PDU:%d][rnti:%x cqi:%d channel:%d]\n", i, src_pdu->rx_ue_information.rnti,
                     src_pdu->ul_cqi_information.ul_cqi, src_pdu->ul_cqi_information.channel);
         memcpy(&UL_RCC_INFO.cqi_ind[index].cqi_indication_body.cqi_pdu_list[i],
                src_pdu, sizeof(nfapi_cqi_indication_pdu_t));
@@ -1175,7 +1175,7 @@ int phy_cqi_indication(struct nfapi_vnf_p7_config *config, nfapi_cqi_indication_
   assert(ind->cqi_indication_body.number_of_cqis <= NFAPI_CQI_IND_MAX_PDU);
   for(int i=0; i<ind->cqi_indication_body.number_of_cqis; i++) {
     nfapi_cqi_indication_pdu_t *src_pdu = &ind->cqi_indication_body.cqi_pdu_list[i];
-    DU_LOG("CQI_IND[PDU:%d][rnti:%x cqi:%d channel:%d]\n", i, src_pdu->rx_ue_information.rnti,
+    DU_LOG("\nINFO   --> CQI_IND[PDU:%d][rnti:%x cqi:%d channel:%d]\n", i, src_pdu->rx_ue_information.rnti,
                 src_pdu->ul_cqi_information.ul_cqi, src_pdu->ul_cqi_information.channel);
     memcpy(&dest_ind->cqi_indication_body.cqi_pdu_list[i],
            src_pdu, sizeof(nfapi_cqi_indication_pdu_t));
@@ -1225,7 +1225,7 @@ int phy_nr_slot_indication(nfapi_nr_slot_indication_scf_t *ind) {
   uint32_t vnf_sfn_slot = sfnslot_add_slot(ind->sfn, ind->slot, vnf_slot_ahead);
   uint16_t vnf_sfn = NFAPI_SFNSLOT2SFN(vnf_sfn_slot);
   uint8_t vnf_slot = NFAPI_SFNSLOT2SLOT(vnf_sfn_slot);
-  DU_LOG("VNF SFN/Slot %d.%d \n", vnf_sfn, vnf_slot);
+  DU_LOG("\nINFO   --> VNF SFN/Slot %d.%d \n", vnf_sfn, vnf_slot);
 
   nfapi_nr_slot_indication_scf_t *nr_slot_ind = calloc(1, sizeof(*nr_slot_ind));
   nr_slot_ind->header = ind->header;
@@ -1233,7 +1233,7 @@ int phy_nr_slot_indication(nfapi_nr_slot_indication_scf_t *ind) {
   nr_slot_ind->slot = vnf_slot;
   if (!put_queue(&gnb_slot_ind_queue, nr_slot_ind))
   {
-    DU_LOG("[VNF] Put_queue failed for slot_ind\n");
+    DU_LOG("\nINFO   --> [VNF] Put_queue failed for slot_ind\n");
     free(nr_slot_ind);
     nr_slot_ind = NULL;
   }
@@ -1256,7 +1256,7 @@ int phy_nr_srs_indication(nfapi_nr_srs_indication_t *ind) {
   for (int i=0; i<ind->number_of_pdus; i++) {
     memcpy(&gNB->UL_INFO.srs_ind.pdu_list[i], &ind->pdu_list[i], sizeof(ind->pdu_list[0]));
 
-    DU_LOG("%s() NFAPI SFN/Slot:%d.%d SRS_IND:number_of_pdus:%d UL_INFO:pdus:%d\n",
+    DU_LOG("\nINFO   --> %s() NFAPI SFN/Slot:%d.%d SRS_IND:number_of_pdus:%d UL_INFO:pdus:%d\n",
         __FUNCTION__,
         ind->sfn,ind->slot, ind->number_of_pdus, gNB->UL_INFO.srs_ind.number_of_pdus
         );
@@ -1307,9 +1307,9 @@ void vnf_trace(nfapi_trace_level_t nfapi_level, const char *message, ...) {
 int phy_vendor_ext(struct nfapi_vnf_p7_config *config, nfapi_p7_message_header_t *msg) {
   if(msg->message_id == P7_VENDOR_EXT_IND) {
     //vendor_ext_p7_ind* ind = (vendor_ext_p7_ind*)msg;
-    //DU_LOG("[VNF] vendor_ext (error_code:%d)\n", ind->error_code);
+    //DU_LOG("\nINFO   --> [VNF] vendor_ext (error_code:%d)\n", ind->error_code);
   } else {
-    DU_LOG("[VNF] unknown %02x\n", msg->message_id);
+    DU_LOG("\nINFO   --> [VNF] unknown %02x\n", msg->message_id);
   }
 
   return 0;
@@ -1336,12 +1336,12 @@ int phy_unpack_vendor_extension_tlv(nfapi_tl_t *tl, uint8_t **ppReadPackedMessag
 }
 
 int phy_pack_vendor_extension_tlv(void *ve, uint8_t **ppWritePackedMsg, uint8_t *end, nfapi_p7_codec_config_t *codec) {
-  //DU_LOG("phy_pack_vendor_extension_tlv\n");
+  //DU_LOG("\nINFO   --> phy_pack_vendor_extension_tlv\n");
   nfapi_tl_t *tlv = (nfapi_tl_t *)ve;
 
   switch(tlv->tag) {
     case VENDOR_EXT_TLV_1_TAG: {
-      //DU_LOG("Packing VENDOR_EXT_TLV_1\n");
+      //DU_LOG("\nINFO   --> Packing VENDOR_EXT_TLV_1\n");
       vendor_ext_tlv_1 *ve = (vendor_ext_tlv_1 *)tlv;
 
       if(!push32(ve->dummy, ppWritePackedMsg, end))
@@ -1358,7 +1358,7 @@ int phy_pack_vendor_extension_tlv(void *ve, uint8_t **ppWritePackedMsg, uint8_t 
 }
 
 int phy_unpack_p7_vendor_extension(nfapi_p7_message_header_t *header, uint8_t **ppReadPackedMessage, uint8_t *end, nfapi_p7_codec_config_t *config) {
-  //DU_LOG("%s\n", __FUNCTION__);
+  //DU_LOG("\nINFO   --> %s\n", __FUNCTION__);
   if(header->message_id == P7_VENDOR_EXT_IND) {
     vendor_ext_p7_ind *req = (vendor_ext_p7_ind *)(header);
 
@@ -1370,9 +1370,9 @@ int phy_unpack_p7_vendor_extension(nfapi_p7_message_header_t *header, uint8_t **
 }
 
 int phy_pack_p7_vendor_extension(nfapi_p7_message_header_t *header, uint8_t **ppWritePackedMsg, uint8_t *end, nfapi_p7_codec_config_t *config) {
-  //DU_LOG("%s\n", __FUNCTION__);
+  //DU_LOG("\nINFO   --> %s\n", __FUNCTION__);
   if(header->message_id == P7_VENDOR_EXT_REQ) {
-    //DU_LOG("%s\n", __FUNCTION__);
+    //DU_LOG("\nINFO   --> %s\n", __FUNCTION__);
     vendor_ext_p7_req *req = (vendor_ext_p7_req *)(header);
 
     if(!(push16(req->dummy1, ppWritePackedMsg, end) &&
@@ -1384,10 +1384,10 @@ int phy_pack_p7_vendor_extension(nfapi_p7_message_header_t *header, uint8_t **pp
 }
 
 int vnf_pack_p4_p5_vendor_extension(nfapi_p4_p5_message_header_t *header, uint8_t **ppWritePackedMsg, uint8_t *end, nfapi_p4_p5_codec_config_t *codec) {
-  //DU_LOG("%s\n", __FUNCTION__);
+  //DU_LOG("\nINFO   --> %s\n", __FUNCTION__);
   if(header->message_id == P5_VENDOR_EXT_REQ) {
     vendor_ext_p5_req *req = (vendor_ext_p5_req *)(header);
-    //DU_LOG("%s %d %d\n", __FUNCTION__, req->dummy1, req->dummy2);
+    //DU_LOG("\nINFO   --> %s %d %d\n", __FUNCTION__, req->dummy1, req->dummy2);
     return (!(push16(req->dummy1, ppWritePackedMsg, end) &&
               push16(req->dummy2, ppWritePackedMsg, end)));
   }
@@ -1399,7 +1399,7 @@ static pthread_t vnf_start_pthread;
 static pthread_t vnf_p7_start_pthread;
 
 void *vnf_nr_p7_start_thread(void *ptr) {
-  DU_LOG("%s()\n", __FUNCTION__);
+  DU_LOG("\nINFO   --> %s()\n", __FUNCTION__);
   pthread_setname_np(pthread_self(), "VNF_P7");
   nfapi_vnf_p7_config_t *config = (nfapi_vnf_p7_config_t *)ptr;
   nfapi_nr_vnf_p7_start(config);
@@ -1407,7 +1407,7 @@ void *vnf_nr_p7_start_thread(void *ptr) {
 }
 
 void *vnf_p7_start_thread(void *ptr) {
-  DU_LOG("%s()\n", __FUNCTION__);
+  DU_LOG("\nINFO   --> %s()\n", __FUNCTION__);
   pthread_setname_np(pthread_self(), "VNF_P7");
   nfapi_vnf_p7_config_t *config = (nfapi_vnf_p7_config_t *)ptr;
   nfapi_vnf_p7_start(config);
@@ -1490,7 +1490,7 @@ void *vnf_nr_p7_thread_start(void *ptr) {
   p7_vnf->config->codec_config.deallocate = &vnf_deallocate;
   p7_vnf->config->allocate_p7_vendor_ext = &phy_allocate_p7_vendor_ext;
   p7_vnf->config->deallocate_p7_vendor_ext = &phy_deallocate_p7_vendor_ext;
-  DU_LOG("[VNF] Creating VNF NFAPI P7 start thread %s\n", __FUNCTION__);
+  DU_LOG("\nINFO   --> [VNF] Creating VNF NFAPI P7 start thread %s\n", __FUNCTION__);
   pthread_create(&vnf_p7_start_pthread, NULL, &vnf_nr_p7_start_thread, p7_vnf->config);
   return 0;
 }
@@ -1526,7 +1526,7 @@ void *vnf_p7_thread_start(void *ptr) {
   p7_vnf->config->codec_config.deallocate = &vnf_deallocate;
   p7_vnf->config->allocate_p7_vendor_ext = &phy_allocate_p7_vendor_ext;
   p7_vnf->config->deallocate_p7_vendor_ext = &phy_deallocate_p7_vendor_ext;
-  DU_LOG("[VNF] Creating VNF NFAPI P7 start thread %s\n", __FUNCTION__);
+  DU_LOG("\nINFO   --> [VNF] Creating VNF NFAPI P7 start thread %s\n", __FUNCTION__);
   pthread_create(&vnf_p7_start_pthread, NULL, &vnf_p7_start_thread, p7_vnf->config);
   return 0;
 }
@@ -1536,7 +1536,7 @@ int pnf_nr_start_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_nr_pnf_st
   vnf_p7_info *p7_vnf = vnf->p7_vnfs;
   pnf_info *pnf = vnf->pnfs;
   nfapi_nr_param_request_scf_t req;
-  DU_LOG("[VNF] pnf start response idx:%d config:%p user_data:%p p7_vnf[config:%p thread_started:%d]\n", p5_idx, config, config->user_data, vnf->p7_vnfs[0].config, vnf->p7_vnfs[0].thread_started);
+  DU_LOG("\nINFO   --> [VNF] pnf start response idx:%d config:%p user_data:%p p7_vnf[config:%p thread_started:%d]\n", p5_idx, config, config->user_data, vnf->p7_vnfs[0].config, vnf->p7_vnfs[0].thread_started);
 
   if(p7_vnf->thread_started == 0) {
     pthread_t vnf_p7_thread;
@@ -1547,7 +1547,7 @@ int pnf_nr_start_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_nr_pnf_st
   }
 
   // start all the phys in the pnf.
-  DU_LOG("[VNF] Sending NFAPI_VNF_PARAM_REQUEST phy_id:%d\n", pnf->phys[0].id);
+  DU_LOG("\nINFO   --> [VNF] Sending NFAPI_VNF_PARAM_REQUEST phy_id:%d\n", pnf->phys[0].id);
   memset(&req, 0, sizeof(req));
   req.header.message_id = NFAPI_NR_PHY_MSG_TYPE_PARAM_REQUEST;
   req.header.phy_id = pnf->phys[0].id;
@@ -1560,7 +1560,7 @@ int pnf_start_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_pnf_start_re
   vnf_p7_info *p7_vnf = vnf->p7_vnfs;
   pnf_info *pnf = vnf->pnfs;
   nfapi_param_request_t req;
-  DU_LOG("[VNF] pnf start response idx:%d config:%p user_data:%p p7_vnf[config:%p thread_started:%d]\n", p5_idx, config, config->user_data, vnf->p7_vnfs[0].config, vnf->p7_vnfs[0].thread_started);
+  DU_LOG("\nINFO   --> [VNF] pnf start response idx:%d config:%p user_data:%p p7_vnf[config:%p thread_started:%d]\n", p5_idx, config, config->user_data, vnf->p7_vnfs[0].config, vnf->p7_vnfs[0].thread_started);
 
   if(p7_vnf->thread_started == 0) {
     pthread_t vnf_p7_thread;
@@ -1571,7 +1571,7 @@ int pnf_start_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_pnf_start_re
   }
 
   // start all the phys in the pnf.
-  DU_LOG("[VNF] Sending NFAPI_VNF_PARAM_REQUEST phy_id:%d\n", pnf->phys[0].id);
+  DU_LOG("\nINFO   --> [VNF] Sending NFAPI_VNF_PARAM_REQUEST phy_id:%d\n", pnf->phys[0].id);
   memset(&req, 0, sizeof(req));
   req.header.message_id = NFAPI_PARAM_REQUEST;
   req.header.phy_id = pnf->phys[0].id;
@@ -1583,7 +1583,7 @@ extern uint32_t to_earfcn(int eutra_bandP,uint32_t dl_CarrierFreq,uint32_t bw);
 
 int nr_param_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_nr_param_response_scf_t *resp) {
 
-  DU_LOG("[VNF] Received NFAPI_PARAM_RESP idx:%d phy_id:%d\n", p5_idx, resp->header.phy_id);
+  DU_LOG("\nINFO   --> [VNF] Received NFAPI_PARAM_RESP idx:%d phy_id:%d\n", p5_idx, resp->header.phy_id);
   /* ======== small cell integration ======== */
   /*
   vnf_info *vnf = (vnf_info *)(config->user_data);
@@ -1597,26 +1597,26 @@ int nr_param_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_nr_param_resp
   memcpy(&pnf_p7_sockaddr.sin_addr.s_addr, &(resp->nfapi_config.p7_pnf_address_ipv4.address[0]), 4);
   phy->remote_addr = inet_ntoa(pnf_p7_sockaddr.sin_addr);
   // for now just 1
-  DU_LOG("[VNF] %d.%d pnf p7 %s:%d timing %u %u %u %u\n", p5_idx, phy->id, phy->remote_addr, phy->remote_port, p7_vnf->timing_window, p7_vnf->periodic_timing_period, p7_vnf->aperiodic_timing_enabled,
+  DU_LOG("\nINFO   --> [VNF] %d.%d pnf p7 %s:%d timing %u %u %u %u\n", p5_idx, phy->id, phy->remote_addr, phy->remote_port, p7_vnf->timing_window, p7_vnf->periodic_timing_period, p7_vnf->aperiodic_timing_enabled,
          p7_vnf->periodic_timing_period);
   req->header.message_id = NFAPI_NR_PHY_MSG_TYPE_CONFIG_REQUEST;
   req->header.phy_id = phy->id;
-  DU_LOG("[VNF] Send NFAPI_CONFIG_REQUEST\n");
-  //DU_LOG("\n NR bandP =%d\n",req->nfapi_config.rf_bands.rf_band[0]);
+  DU_LOG("\nINFO   --> [VNF] Send NFAPI_CONFIG_REQUEST\n");
+  //DU_LOG("\nINFO   --> \n NR bandP =%d\n",req->nfapi_config.rf_bands.rf_band[0]);
 
   req->nfapi_config.p7_vnf_port.tl.tag = NFAPI_NR_NFAPI_P7_VNF_PORT_TAG;
   req->nfapi_config.p7_vnf_port.value = p7_vnf->local_port;
   req->num_tlv++;
-  DU_LOG("[VNF] Local_port:%d\n", ntohs(p7_vnf->local_port));
+  DU_LOG("\nINFO   --> [VNF] Local_port:%d\n", ntohs(p7_vnf->local_port));
   req->nfapi_config.p7_vnf_address_ipv4.tl.tag = NFAPI_NR_NFAPI_P7_VNF_ADDRESS_IPV4_TAG;
   struct sockaddr_in vnf_p7_sockaddr;
   vnf_p7_sockaddr.sin_addr.s_addr = inet_addr(p7_vnf->local_addr);
   memcpy(&(req->nfapi_config.p7_vnf_address_ipv4.address[0]), &vnf_p7_sockaddr.sin_addr.s_addr, 4);
   req->num_tlv++;
-  DU_LOG("[VNF] Local_addr:%s\n", p7_vnf->local_addr);
+  DU_LOG("\nINFO   --> [VNF] Local_addr:%s\n", p7_vnf->local_addr);
   req->nfapi_config.timing_window.tl.tag = NFAPI_NR_NFAPI_TIMING_WINDOW_TAG;
   req->nfapi_config.timing_window.value = p7_vnf->timing_window;
-  DU_LOG("\n[VNF]Timing window tag : %d Timing window:%u\n",NFAPI_NR_NFAPI_TIMING_WINDOW_TAG, p7_vnf->timing_window);
+  DU_LOG("\nINFO   --> \n[VNF]Timing window tag : %d Timing window:%u\n",NFAPI_NR_NFAPI_TIMING_WINDOW_TAG, p7_vnf->timing_window);
   req->num_tlv++;
 
   if(p7_vnf->periodic_timing_enabled || p7_vnf->aperiodic_timing_enabled) {
@@ -1651,7 +1651,7 @@ req->nfapi_config.tx_data_timing_offset.tl.tag = NFAPI_NR_NFAPI_TX_DATA_TIMING_O
 int param_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_param_response_t *resp) {
   /* ======== small cell integration ======== */
   /*
-  DU_LOG("[VNF] Received NFAPI_PARAM_RESP idx:%d phy_id:%d\n", p5_idx, resp->header.phy_id);
+  DU_LOG("\nINFO   --> [VNF] Received NFAPI_PARAM_RESP idx:%d phy_id:%d\n", p5_idx, resp->header.phy_id);
   vnf_info *vnf = (vnf_info *)(config->user_data);
   vnf_p7_info *p7_vnf = vnf->p7_vnfs;
   pnf_info *pnf = vnf->pnfs;
@@ -1662,24 +1662,24 @@ int param_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_param_response_t
   memcpy(&pnf_p7_sockaddr.sin_addr.s_addr, &(resp->nfapi_config.p7_pnf_address_ipv4.address[0]), 4);
   phy->remote_addr = inet_ntoa(pnf_p7_sockaddr.sin_addr);
   // for now just 1
-  DU_LOG("[VNF] %d.%d pnf p7 %s:%d timing %u %u %u %u\n", p5_idx, phy->id, phy->remote_addr, phy->remote_port, p7_vnf->timing_window, p7_vnf->periodic_timing_period, p7_vnf->aperiodic_timing_enabled,
+  DU_LOG("\nINFO   --> [VNF] %d.%d pnf p7 %s:%d timing %u %u %u %u\n", p5_idx, phy->id, phy->remote_addr, phy->remote_port, p7_vnf->timing_window, p7_vnf->periodic_timing_period, p7_vnf->aperiodic_timing_enabled,
          p7_vnf->periodic_timing_period);
   req->header.message_id = NFAPI_CONFIG_REQUEST;
   req->header.phy_id = phy->id;
-  DU_LOG("[VNF] Send NFAPI_CONFIG_REQUEST\n");
+  DU_LOG("\nINFO   --> [VNF] Send NFAPI_CONFIG_REQUEST\n");
   req->nfapi_config.p7_vnf_port.tl.tag = NFAPI_NFAPI_P7_VNF_PORT_TAG;
   req->nfapi_config.p7_vnf_port.value = p7_vnf->local_port;
   req->num_tlv++;
-  DU_LOG("[VNF] Local_port:%d\n", ntohs(p7_vnf->local_port));
+  DU_LOG("\nINFO   --> [VNF] Local_port:%d\n", ntohs(p7_vnf->local_port));
   req->nfapi_config.p7_vnf_address_ipv4.tl.tag = NFAPI_NFAPI_P7_VNF_ADDRESS_IPV4_TAG;
   struct sockaddr_in vnf_p7_sockaddr;
   vnf_p7_sockaddr.sin_addr.s_addr = inet_addr(p7_vnf->local_addr);
   memcpy(&(req->nfapi_config.p7_vnf_address_ipv4.address[0]), &vnf_p7_sockaddr.sin_addr.s_addr, 4);
   req->num_tlv++;
-  DU_LOG("[VNF] Local_addr:%s\n", p7_vnf->local_addr);
+  DU_LOG("\nINFO   --> [VNF] Local_addr:%s\n", p7_vnf->local_addr);
   req->nfapi_config.timing_window.tl.tag = NFAPI_NFAPI_TIMING_WINDOW_TAG;
   req->nfapi_config.timing_window.value = p7_vnf->timing_window;
-  DU_LOG("[VNF] Timing window:%u\n", p7_vnf->timing_window);
+  DU_LOG("\nINFO   --> [VNF] Timing window:%u\n", p7_vnf->timing_window);
   req->num_tlv++;
 
   if(p7_vnf->periodic_timing_enabled || p7_vnf->aperiodic_timing_enabled) {
@@ -1707,8 +1707,8 @@ int param_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_param_response_t
 
 int nr_config_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_nr_config_response_scf_t *resp) {
   nfapi_nr_start_request_scf_t req;
-  DU_LOG("[VNF] Received NFAPI_CONFIG_RESP idx:%d phy_id:%d\n", p5_idx, resp->header.phy_id);
-  DU_LOG("[VNF] Calling oai_enb_init()\n");
+  DU_LOG("\nINFO   --> [VNF] Received NFAPI_CONFIG_RESP idx:%d phy_id:%d\n", p5_idx, resp->header.phy_id);
+  DU_LOG("\nINFO   --> [VNF] Calling oai_enb_init()\n");
   memset(&req, 0, sizeof(req));
   req.header.message_id = NFAPI_NR_PHY_MSG_TYPE_START_REQUEST;
   req.header.phy_id = resp->header.phy_id;
@@ -1718,19 +1718,19 @@ int nr_config_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_nr_config_re
 
 int config_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_config_response_t *resp) {
   nfapi_start_request_t req;
-  DU_LOG("[VNF] Received NFAPI_CONFIG_RESP idx:%d phy_id:%d\n", p5_idx, resp->header.phy_id);
-  DU_LOG("[VNF] Calling oai_enb_init()\n");
+  DU_LOG("\nINFO   --> [VNF] Received NFAPI_CONFIG_RESP idx:%d phy_id:%d\n", p5_idx, resp->header.phy_id);
+  DU_LOG("\nINFO   --> [VNF] Calling oai_enb_init()\n");
   // oai_enb_init();
   memset(&req, 0, sizeof(req));
   req.header.message_id = NFAPI_START_REQUEST;
   req.header.phy_id = resp->header.phy_id;
   nfapi_vnf_start_req(config, p5_idx, &req);
-  DU_LOG("[VNF] Send NFAPI_VNF_START_REQUEST idx:%d phy_id:%d\n", p5_idx, resp->header.phy_id);
+  DU_LOG("\nINFO   --> [VNF] Send NFAPI_VNF_START_REQUEST idx:%d phy_id:%d\n", p5_idx, resp->header.phy_id);
   return 0;
 }
 
 int start_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_start_response_t *resp) {
-  DU_LOG("[VNF] Received NFAPI_START_RESP idx:%d phy_id:%d\n", p5_idx, resp->header.phy_id);
+  DU_LOG("\nINFO   --> [VNF] Received NFAPI_START_RESP idx:%d phy_id:%d\n", p5_idx, resp->header.phy_id);
   vnf_info *vnf = (vnf_info *)(config->user_data);
   pnf_info *pnf = vnf->pnfs;
   phy_info *phy = pnf->phys;
@@ -1740,7 +1740,7 @@ int start_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_start_response_t
 }
 
 int nr_start_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_nr_start_response_scf_t *resp) {
-  DU_LOG("[VNF] Received NFAPI_START_RESP idx:%d phy_id:%d\n", p5_idx, resp->header.phy_id);
+  DU_LOG("\nINFO   --> [VNF] Received NFAPI_START_RESP idx:%d phy_id:%d\n", p5_idx, resp->header.phy_id);
   vnf_info *vnf = (vnf_info *)(config->user_data);
   pnf_info *pnf = vnf->pnfs;
   phy_info *phy = pnf->phys;
@@ -1751,12 +1751,12 @@ int nr_start_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_nr_start_resp
 }
 
 int vendor_ext_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_p4_p5_message_header_t *msg) {
-  DU_LOG("[VNF] %s\n", __FUNCTION__);
+  DU_LOG("\nINFO   --> [VNF] %s\n", __FUNCTION__);
 
   switch(msg->message_id) {
     case P5_VENDOR_EXT_RSP: {
       vendor_ext_p5_rsp *rsp = (vendor_ext_p5_rsp *)msg;
-      DU_LOG("[VNF] P5_VENDOR_EXT_RSP error_code:%d\n", rsp->error_code);
+      DU_LOG("\nINFO   --> [VNF] P5_VENDOR_EXT_RSP error_code:%d\n", rsp->error_code);
       // send the start request
       nfapi_pnf_start_request_t req;
       memset(&req, 0, sizeof(req));
@@ -1770,7 +1770,7 @@ int vendor_ext_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_p4_p5_message_he
 }
 
 int vnf_unpack_p4_p5_vendor_extension(nfapi_p4_p5_message_header_t *header, uint8_t **ppReadPackedMessage, uint8_t *end, nfapi_p4_p5_codec_config_t *codec) {
-  //DU_LOG("%s\n", __FUNCTION__);
+  //DU_LOG("\nINFO   --> %s\n", __FUNCTION__);
   if(header->message_id == P5_VENDOR_EXT_RSP) {
     vendor_ext_p5_rsp *req = (vendor_ext_p5_rsp *)(header);
     return(!pull16(ppReadPackedMessage, &req->error_code, end));
@@ -1795,14 +1795,14 @@ void vnf_deallocate_p4_p5_vendor_ext(nfapi_p4_p5_message_header_t *header) {
 nfapi_vnf_config_t *config = 0;
 
 void vnf_nr_start_thread(void *ptr) {
-  DU_LOG("[VNF] VNF NFAPI thread - nfapi_vnf_start()%s\n", __FUNCTION__);
+  DU_LOG("\nINFO   --> [VNF] VNF NFAPI thread - nfapi_vnf_start()%s\n", __FUNCTION__);
   pthread_setname_np(pthread_self(), "VNF");
   config = (nfapi_vnf_config_t *)ptr;
   nfapi_nr_vnf_start(config);
 }
 
 void vnf_start_thread(void *ptr) {
-  DU_LOG("[VNF] VNF NFAPI thread - nfapi_vnf_start()%s\n", __FUNCTION__);
+  DU_LOG("\nINFO   --> [VNF] VNF NFAPI thread - nfapi_vnf_start()%s\n", __FUNCTION__);
   pthread_setname_np(pthread_self(), "VNF");
   config = (nfapi_vnf_config_t *)ptr;
   nfapi_vnf_start(config);
@@ -1819,7 +1819,7 @@ void configure_nr_nfapi_vnf(char *vnf_addr, int vnf_p5_port, char *pnf_ip_addr, 
   vnf.p7_vnfs[0].aperiodic_timing_enabled = 0;
   vnf.p7_vnfs[0].periodic_timing_period = 10;
   vnf.p7_vnfs[0].config = nfapi_vnf_p7_config_create();
-  DU_LOG("[VNF] %s() vnf.p7_vnfs[0].config:%p VNF ADDRESS:%s:%d\n", __FUNCTION__, vnf.p7_vnfs[0].config, vnf_addr, vnf_p5_port);
+  DU_LOG("\nINFO   --> [VNF] %s() vnf.p7_vnfs[0].config:%p VNF ADDRESS:%s:%d\n", __FUNCTION__, vnf.p7_vnfs[0].config, vnf_addr, vnf_p5_port);
   strcpy(vnf.p7_vnfs[0].local_addr, vnf_addr);
   vnf.p7_vnfs[0].local_port = vnf_p7_port;
   vnf.p7_vnfs[0].mac = (mac_t *)malloc(sizeof(mac_t));
@@ -1853,9 +1853,9 @@ void configure_nr_nfapi_vnf(char *vnf_addr, int vnf_p5_port, char *pnf_ip_addr, 
   config->codec_config.allocate = &vnf_allocate;
   config->codec_config.deallocate = &vnf_deallocate;
   // memset(&UL_RCC_INFO,0,sizeof(UL_RCC_IND_t));
-  DU_LOG("[VNF] Creating VNF NFAPI start thread %s\n", __FUNCTION__);
+  DU_LOG("\nINFO   --> [VNF] Creating VNF NFAPI start thread %s\n", __FUNCTION__);
   pthread_create(&vnf_start_pthread, NULL, (void *)&vnf_nr_start_thread, config);
-  DU_LOG("[VNF] Created VNF NFAPI start thread %s\n", __FUNCTION__);
+  DU_LOG("\nINFO   --> [VNF] Created VNF NFAPI start thread %s\n", __FUNCTION__);
 }
 
 
@@ -1868,7 +1868,7 @@ void configure_nfapi_vnf(char *vnf_addr, int vnf_p5_port, char *pnf_ip_addr, int
   vnf.p7_vnfs[0].aperiodic_timing_enabled = 0;
   vnf.p7_vnfs[0].periodic_timing_period = 10;
   vnf.p7_vnfs[0].config = nfapi_vnf_p7_config_create();
-  DU_LOG("[VNF] %s() vnf.p7_vnfs[0].config:%p VNF ADDRESS:%s:%d\n", __FUNCTION__, vnf.p7_vnfs[0].config, vnf_addr, vnf_p5_port);
+  DU_LOG("\nINFO   --> [VNF] %s() vnf.p7_vnfs[0].config:%p VNF ADDRESS:%s:%d\n", __FUNCTION__, vnf.p7_vnfs[0].config, vnf_addr, vnf_p5_port);
   strcpy(vnf.p7_vnfs[0].local_addr, vnf_addr);
   vnf.p7_vnfs[0].local_port = vnf_p7_port;
   vnf.p7_vnfs[0].mac = (mac_t *)malloc(sizeof(mac_t));
@@ -1902,9 +1902,9 @@ void configure_nfapi_vnf(char *vnf_addr, int vnf_p5_port, char *pnf_ip_addr, int
   config->codec_config.allocate = &vnf_allocate;
   config->codec_config.deallocate = &vnf_deallocate;
   // memset(&UL_RCC_INFO,0,sizeof(UL_RCC_IND_t));
-  DU_LOG("[VNF] Creating VNF NFAPI start thread %s\n", __FUNCTION__);
+  DU_LOG("\nINFO   --> [VNF] Creating VNF NFAPI start thread %s\n", __FUNCTION__);
   pthread_create(&vnf_start_pthread, NULL, (void *)&vnf_start_thread, config);
-  DU_LOG("[VNF] Created VNF NFAPI start thread %s\n", __FUNCTION__);
+  DU_LOG("\nINFO   --> [VNF] Created VNF NFAPI start thread %s\n", __FUNCTION__);
 }
 
 int oai_nfapi_dl_config_req(nfapi_dl_config_request_t *dl_config_req) {
@@ -1924,7 +1924,7 @@ int oai_nfapi_dl_config_req(nfapi_dl_config_request_t *dl_config_req) {
             {
                 uint16_t dl_rnti = dl_config_req->dl_config_request_body.dl_config_pdu_list[i].dlsch_pdu.dlsch_pdu_rel8.rnti;
                 uint16_t numPDUs = dl_config_req->dl_config_request_body.number_pdu;
-                DU_LOG("(OAI eNB) Sending dl_config_req at VNF during Frame: %d and Subframe: %d,"
+                DU_LOG("\nINFO   --> (OAI eNB) Sending dl_config_req at VNF during Frame: %d and Subframe: %d,"
                            " with a RNTI value of: %x and with number of PDUs: %u\n",
                       NFAPI_SFNSF2SFN(dl_config_req->sfn_sf),NFAPI_SFNSF2SF(dl_config_req->sfn_sf), dl_rnti, numPDUs);
             }
@@ -2059,7 +2059,7 @@ static void remove_ul_config_req_pdu(int index, nfapi_ul_config_request_t *ul_co
 
   if (index >= num_pdus || index < 0)
   {
-    DU_LOG("[VNF] %s() Unable to drop bad ul_config_req PDU\n", __FUNCTION__);
+    DU_LOG("\nINFO   --> [VNF] %s() Unable to drop bad ul_config_req PDU\n", __FUNCTION__);
     abort();
   }
 
@@ -2110,7 +2110,7 @@ int oai_nfapi_ul_config_req(nfapi_ul_config_request_t *ul_config_req) {
   {
     uint8_t pdu_type = pdu_list[i].pdu_type;
 
-    DU_LOG("ul_config_req num_pdus: %u pdu_number: %d pdu_type: %u SFN.SF: %d.%d\n",
+    DU_LOG("\nINFO   --> ul_config_req num_pdus: %u pdu_number: %d pdu_type: %u SFN.SF: %d.%d\n",
           num_pdus, i, pdu_type, ul_config_req->sfn_sf >> 4, ul_config_req->sfn_sf & 15);
 
     if (pdu_type != NFAPI_UL_CONFIG_ULSCH_CQI_RI_PDU_TYPE)
@@ -2136,7 +2136,7 @@ int oai_nfapi_ul_config_req(nfapi_ul_config_request_t *ul_config_req) {
       j--;
       num_pdus--;
 
-      DU_LOG("[VNF] Problem, two cqis being sent to a single UE for rnti %x dropping one\n",
+      DU_LOG("\nINFO   --> [VNF] Problem, two cqis being sent to a single UE for rnti %x dropping one\n",
             rnti_i);
     }
   }

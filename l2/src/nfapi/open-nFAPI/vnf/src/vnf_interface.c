@@ -260,7 +260,8 @@ int nfapi_nr_vnf_start(nfapi_vnf_config_t* config)
 				}
 				else
 				{
-					DU_LOG("\n[NFAPI] VNF Interface --> PNF connection (fd:%d) accepted from %s:%d \n", p5Sock,  inet_ntoa(addr.sin_addr), ntohs(addr.sin_port));
+					DU_LOG("\n[NFAPI] VNF Interface --> PNF connection (fd:%d) accepted from %s:%d \n", 
+								p5Sock,  inet_ntoa(addr.sin_addr), ntohs(addr.sin_port));
 					nfapi_vnf_pnf_info_t* pnf = (nfapi_vnf_pnf_info_t*)malloc(sizeof(nfapi_vnf_pnf_info_t));
 					DU_LOG("\n[NFAPI] VNF Interface --> MALLOC nfapi_vnf_pnf_info_t for pnf_list pnf:%p\n", pnf);
 					memset(pnf, 0, sizeof(nfapi_vnf_pnf_info_t));

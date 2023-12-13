@@ -1082,6 +1082,7 @@ uint8_t readVnfCfg()
    // nfapi_vnf_cfg->vnf = (vnf_info*) calloc(1, sizeof(vnf_info));
    // nfapi_vnf_cfg->config = (nfapi_vnf_config_t*) calloc(1, sizeof(nfapi_vnf_config_t));
 
+   DU_LOG("\nDEBUG   --> In function: %s",__FUNCTION__);
    DU_ALLOC_SHRABL_BUF(nfapi_vnf_cfg, sizeof(vnf_cfg_t));
    DU_ALLOC_SHRABL_BUF(nfapi_vnf_cfg->vnf, sizeof(vnf_info));
    DU_ALLOC_SHRABL_BUF(nfapi_vnf_cfg->config, sizeof(nfapi_vnf_config_t));
