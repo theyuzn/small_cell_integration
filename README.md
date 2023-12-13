@@ -12,7 +12,6 @@ The main design of our work focuses on the VNF and scheduler embedded in MAC lay
 ## Installation
 * In this work, the flag `NFAPI=YES` must be set.
 
-1. Complilation
 ```sh
 cd l2/build/odu
 #clean
@@ -26,9 +25,19 @@ make cu_stub NODE=TEST_STUB MACHINE=BIT64 MODE=FDD NFAPI=YES
 make ric_stub NODE=TEST_STUB MACHINE=BIT64 MODE=FDD NFAPI=YES
 ```
 
-2. Execution
+## Execution
+The du, cu_stub, ric_stub need to be run.
 
-**Follow the OCS-DU High guidence**
+The OAI gNB in PNF mode also needs to be run. 
+
+* **`du, cu_stub, ric_stub` --> Follow the OCS-DU High guidence**
+
+* **`OAI gNB PNF mode` --> Follow the following guidence**
+```sh
+# Follow the OAI guide to compile OAI gNB
+
+# Run PNF
+```
 
 ## [Change Log](./CHANGELOG.md)
 
@@ -36,5 +45,16 @@ make ric_stub NODE=TEST_STUB MACHINE=BIT64 MODE=FDD NFAPI=YES
 ## Note
 
 ## Contributor
-* Yu-Hsin Chuang
+* [MWNL](https://mwnl.ce.ncu.edu.tw)
+* [BMW Lab.](https://sites.google.com/view/bmw-lab/home)
+
+| Name               | Email                        |
+| Advisor            |                              |
+| Ray-Guang Cheng    | crg@mail.ntust.edu.tw        |
+| Shiann-Tsong Sheu  | stsheu@cc.ncu.edu.tw         |
+| Maintainer         |                              |
+| Yi-Quan Chen       | b10902109@mail.ntust.edu.tw  |
+| Ming-Hong Hsu      | joe888joejoe@gmail.com       |
+| Yu-Hsin Chuang     | brandonyuhsin@gmail.com      |
+
 
