@@ -1313,7 +1313,7 @@ uint8_t vnfCfgReq(){
    Buffer* mBuf;
 
    if(readVnfCfg() != ROK){
-      DU_LOG("\nERROR  -->  DU_APP : Reading Vnf configuration failed");
+      DU_LOG("\nERROR  -->  [NFAPI] DU_APP : Reading Vnf configuration failed");
       return RFAILED;
    }
 

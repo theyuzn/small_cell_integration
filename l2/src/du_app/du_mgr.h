@@ -419,11 +419,11 @@ uint8_t duBuildAndSendMacCellStart();
 uint8_t duBuildAndSendMacCellStop(uint16_t cellId);
 
 
-/* ======== small cell integration ======== */
-// declare functions below
+#ifdef NFAPI
 uint8_t duBuildAndSendMacVnfCfg();
+#endif // NFAPI
 
-/********************************************/
+
 
 #endif
 

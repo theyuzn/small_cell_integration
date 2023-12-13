@@ -43,9 +43,8 @@
 #define EVENT_RIC_DATA  10
 
 /* ======== small cell integration ======== */
-// The previous number of devent number  are RFU
 #ifdef NFAPI
-#define EVT_VNF_CFG     20
+#define EVT_VNF_CFG     2000
 #endif
 /********************************************/
 

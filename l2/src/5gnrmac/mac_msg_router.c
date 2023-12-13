@@ -101,6 +101,7 @@ void MacHdlDuappEvents(Pst *pst, Buffer *mBuf)
       case EVENT_MAC_VNF_CONFIG_REQ:
          {
             /* Process VNF Start Event */
+            DU_LOG("\nINFO   -->  [NFAPI] case EVENT_MAC_VNF_CONFIG_REQ");
             unpackDuMacVnfCfg(MacProcVnfCfgReq, pst, mBuf);
             break;
          }

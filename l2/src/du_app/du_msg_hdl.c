@@ -1445,7 +1445,6 @@ uint8_t duHdlSchCfgComplete(Pst *pst, RgMngmt *cfm)
    return ROK;
 }
 
-/* ======== small cell integration ======== */
 #ifdef NFAPI
 /**************************************************************************
  * @brief Function to fill and send  VnfCfg
@@ -1482,7 +1481,6 @@ uint8_t duBuildAndSendMacVnfCfg()
 }
 
 #endif
-/*********************************************/
 
 /**************************************************************************
  * @brief Function to fill and send MacCellconfig

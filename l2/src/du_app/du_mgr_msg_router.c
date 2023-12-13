@@ -415,7 +415,7 @@ uint8_t duActvTsk(Pst *pst, Buffer *mBuf)
                      break;
                   }
                   
-               #ifdef NFAPI
+#ifdef NFAPI
                /* ========= small cell integration ======== */
                case EVT_VNF_CFG:
                   {
@@ -425,7 +425,7 @@ uint8_t duActvTsk(Pst *pst, Buffer *mBuf)
                      break;
 
                   }
-               #endif
+#endif
 
                default:
                   {
