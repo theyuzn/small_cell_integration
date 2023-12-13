@@ -2,3 +2,6 @@
 .tox
 docs/_build/
 build/odu/obj/
+bin/cu_stub/
+bin/ric_stub/
+bin/odu/
