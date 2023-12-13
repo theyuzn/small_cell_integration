@@ -130,6 +130,34 @@ uint8_t SchSendCfgCfm(Pst *pst, RgMngmt  *cfm)
    return ROK;
 }
 
+/* ======== small cell integration ======== */
+#ifdef NFAPI
+/**
+ * @brief Layer Manager VNF Configuration request handler.
+ *
+ * @details
+ *
+ *     Function : MacProcVnfCfgReq
+ *
+ *     This function handles the gNB and vnf configuration
+ *     request received from DU APP.
+ *     This API unapcks and forwards the config towards SCH
+ *
+ *  @param[in]  Pst           *pst
+ *  @param[in]  vnf_cfg_t     *nfapi_vnf_config
+ *  @return
+ *      -# ROK
+ **/
+uint8_t MacProcVnfCfgReq(Pst* pst, vnf_cfg_t *nfapi_vnf_config)
+{
+   DU_LOG("\nINFO  -->  LWR_MAC : Calling MacProcVnfCfgReq");
+   sendToLowerMac(VNF_START_CFG_REQUEST, 0, (void*)vnf_config);
+
+   return ROK;
+}
+#endif //NFAPI
+/* ======================================== */
+
 /**
  * @brief Layer Manager Configuration request handler.
  *
@@ -472,10 +500,10 @@ uint8_t MacProcSchCellCfgCfm(Pst *pst, SchCellCfgCfm *schCellCfgCfm)
 /* ======== small cell integration ======== */
 #ifdef NFAPI
       // Wait for PNF connection
-      extern PNF_RUNNING_FLAG_t *pnf_running_flag;
-      while(!pnf_running_flag->flag){
+      extern PNF_Lock_t *pnf_state_lock;
+      while(!pnf_state_lock->flag){
          DU_LOG("\n[Small Cell] The NFAPI flag is set to YES and waiting for PNF connection ...\n");
-         pthread_cond_wait( &(pnf_running_flag->cond), &(pnf_running_flag->mutex));
+         pthread_cond_wait( &(pnf_state_lock->cond), &(pnf_state_lock->mutex));
       }
 #endif
 /* ========================================= */

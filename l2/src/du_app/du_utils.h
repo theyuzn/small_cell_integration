@@ -30,23 +30,23 @@
 #define MAX_SLIV_CONFIG_IDX 105
 
 /* Events */
-#define EVTCFG 0
-#define EVTSCTPSTRT  1
-#define EVENT_CU_DATA  2
-#define EVENT_SCTP_NTFY  3
-#define EVTSRVOPENREQ  4
-#define EVTSRVOPENCFM  5
-#define EVTTNLMGMTREQ  6
-#define EVTTNLMGMTCFM  7
-#define EVTSLOTIND    8
-#define EVTSTARTPOLL  9
+#define EVTCFG          0
+#define EVTSCTPSTRT     1
+#define EVENT_CU_DATA   2
+#define EVENT_SCTP_NTFY 3
+#define EVTSRVOPENREQ   4
+#define EVTSRVOPENCFM   5
+#define EVTTNLMGMTREQ   6
+#define EVTTNLMGMTCFM   7
+#define EVTSLOTIND      8
+#define EVTSTARTPOLL    9
 #define EVENT_RIC_DATA  10
 
 /* ======== small cell integration ======== */
 // The previous number of devent number  are RFU
-
-#define EVT_VNF_CFG 20
-
+#ifdef NFAPI
+#define EVT_VNF_CFG     20
+#endif
 /********************************************/
 
 /* allocate and zero out a static buffer */

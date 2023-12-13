@@ -57,15 +57,23 @@
 #define PDU_PRESENT 1
 #define SET_MSG_LEN(x, size) x += size
 
-/* Global variables */
+/* 
+* ========================================== *
+* Global variables 
+* ========================================== *
+*/
 LwrMacCb lwrMacCb;
-/* ======== small cell integration ======== */
 #ifdef NFAPI
 vnf_info *glb_vnf;
 nfapi_vnf_config_t *glb_config;
 ORAN_OAI_fapi_config_req_t *intgr_fapi_config;
+PNF_Lock_t *pnf_state_lock;
 #endif // NFAPI
-/* ======================================== */
+/* 
+* ========================================== *
+* Global variables end
+* ========================================== *
+*/
 
 uint8_t UnrestrictedSetNcsTable[MAX_ZERO_CORR_CFG_IDX];
 void fapiMacConfigRsp(uint16_t cellId);
@@ -87,17 +95,17 @@ void lwrMacLayerInit(Region region, Pool pool)
    lwrMacCb.numCell = 0;
    lwrMacCb.phyState = PHY_STATE_IDLE;
 
-   /* ======== small cell integration ======== */
-   #ifdef NFAPI
-   pnf_running_flag = (PNF_RUNNING_FLAG_t *)malloc(sizeof(PNF_RUNNING_FLAG_t));
-   pnf_running_flag->flag = 0;
-   pthread_mutex_init(&(pnf_running_flag->mutex), NULL);
-   pthread_cond_init(&(pnf_running_flag->cond), NULL);
+#ifdef NFAPI
+   lwrMacCb.phfState = PNF_STATE_IDLE;
+
+   pnf_state_lock = (PNF_Lock_t *)malloc(sizeof(PNF_Lock_t));
+   pnf_state_lock->flag = 0;
+   pthread_mutex_init(&(pnf_state_lock->mutex), NULL);
+   pthread_cond_init(&(pnf_state_lock->cond), NULL);
 
    glb_config = NULLP;
    glb_vnf = NULLP;
-   #endif
-   /* ========================================= */
+#endif
 
 #ifdef INTEL_WLS_MEM
    /* Initializing WLS free mem list */
@@ -4939,7 +4947,7 @@ lwrMacFsmHdlr fapiEvtHdlr[MAX_STATE][MAX_EVENT] =
       lwr_mac_procInvalidEvt,
    }
 };
-#else
+#else // define NFAPI
 /*******************************************************************
  *
  * @brief Start the VNF: sctp socket and wait for PNF connection
@@ -4960,7 +4968,7 @@ uint8_t intgr_lwr_mac_procVnfCfgStartEvt(void *msg)
 {
    DU_LOG("\nINFO  --> LWR_MAC [NFAPI_TRACE_INFO] : lwr_mac_procVnfCfgStartEvt");
 
-   p5_p7_cfg *msg_p5_p7_cfg = (p5_p7_cfg *)msg;
+   vnf_cfg_t *msg_p5_p7_cfg = (vnf_cfg_t *)msg;
    glb_config = msg_p5_p7_cfg->config;
    glb_vnf = msg_p5_p7_cfg->vnf;
    // memcpy(config, msg_p5_p7_cfg->config, sizeof(nfapi_vnf_config_t));
@@ -5046,6 +5054,7 @@ lwrMacFsmHdlr nfapiEvtHdlr[PNF_MAX_STATE][MAX_EVENT] = {
         intgr_lwr_mac_procPNFConfigRspEvt,
         lwr_mac_procInvalidEvt,
         lwr_mac_procInvalidEvt,
+        lwr_mac_procInvalidEvt,
     },
     {
 /* PNF_STATE_CONFIGURED */
@@ -5065,12 +5074,14 @@ lwrMacFsmHdlr nfapiEvtHdlr[PNF_MAX_STATE][MAX_EVENT] = {
         intgr_lwr_mac_procPNFConfigRspEvt, //  oai PNFConfigRsp
         intgr_lwr_mac_procPNFStartReqEvt,
         lwr_mac_procInvalidEvt,
+        lwr_mac_procInvalidEvt,
     },
     {
 /* PNF_STATE_RUNNING */
 #ifdef INTEL_TIMER_MODE
         lwr_mac_procIqSamplesReqEvt,
 #endif
+        lwr_mac_procInvalidEvt,
         lwr_mac_procInvalidEvt,
         lwr_mac_procInvalidEvt,
         lwr_mac_procInvalidEvt,
@@ -5107,6 +5118,7 @@ lwrMacFsmHdlr fapiEvtHdlr[MAX_STATE][MAX_EVENT] =
             lwr_mac_procInvalidEvt,
             lwr_mac_procInvalidEvt,
             lwr_mac_procInvalidEvt,
+            lwr_mac_procInvalidEvt,
         },
         {
 /* PHY_STATE_CONFIGURED */
@@ -5118,6 +5130,7 @@ lwrMacFsmHdlr fapiEvtHdlr[MAX_STATE][MAX_EVENT] =
             lwr_mac_procConfigReqEvt,
             lwr_mac_procConfigRspEvt,
             lwr_mac_procStartReqEvt,
+            lwr_mac_procInvalidEvt,
             lwr_mac_procInvalidEvt,
             lwr_mac_procInvalidEvt,
             lwr_mac_procInvalidEvt,
@@ -5145,9 +5158,11 @@ lwrMacFsmHdlr fapiEvtHdlr[MAX_STATE][MAX_EVENT] =
             lwr_mac_procInvalidEvt,
             lwr_mac_procInvalidEvt,
             lwr_mac_procInvalidEvt,
+            lwr_mac_procInvalidEvt,
         },
 };
 #endif // NFAPI
+
 
 /*******************************************************************
  *
@@ -5169,16 +5184,19 @@ lwrMacFsmHdlr fapiEvtHdlr[MAX_STATE][MAX_EVENT] =
  ******************************************************************/
 void sendToLowerMac(uint16_t msgType, uint32_t msgLen, void *msg)
 {
-   DU_LOG("\nINFO  -->  LWR_MAC : phystate : %2d in msgType : %d", lwrMacCb.phyState, msgType);
    lwrMacCb.event = msgType;
-   
-   /* ======== small cell integration ======== */
-   #ifdef NFAPI
-   if (!pnf_running_flag->flag) nfapiEvtHdlr[PNF_STATE_IDLE][lwrMacCb.event](msg);
-   else 
-   #endif
-   /* ========================================= */
-   {fapiEvtHdlr[lwrMacCb.phyState][lwrMacCb.event](msg);}
+
+   DU_LOG("\nINFO  -->  LWR_MAC : phyState : %2d in msgType : %d", lwrMacCb.phyState, msgType);
+
+#ifdef NFAPI
+   DU_LOG("\nINFO  -->  NFAPI : pnfState : %2d", lwrMacCb.pnfState);
+   if(!pnf_state_lock->flag)
+      nfapiEvtHdlr[lwrMacCb.pnfState][lwrMacCb.event](msg);
+   else
+#endif
+   {
+      fapiEvtHdlr[lwrMacCb.phyState][lwrMacCb.event](msg);
+   }
 }
 
 /**********************************************************************

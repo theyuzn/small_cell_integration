@@ -48,15 +48,12 @@ nfapi_vnf_phy_info_t* nfapi_vnf_phy_info_list_find(nfapi_vnf_config_t* config, u
 void nfapi_vnf_pnf_list_add(nfapi_vnf_config_t* config, nfapi_vnf_pnf_info_t* node);
 nfapi_vnf_pnf_info_t* nfapi_vnf_pnf_list_find(nfapi_vnf_config_t* config, int p5_idx);
 
-/* ======== small cell integration ======== */
 #ifdef NFAPI
-typedef struct PNF_RUNNING_FLAG_t{
+typedef struct PNF_Lock_t{
 	pthread_mutex_t mutex;
 	pthread_cond_t cond;
 	int flag;
-}PNF_RUNNING_FLAG_t;
-
-PNF_RUNNING_FLAG_t *pnf_running_flag;
+}PNF_Lock_t;
 #endif //NFAPI
-/* ======================================== */
+
 #endif // _VNF_H_

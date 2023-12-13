@@ -93,19 +93,19 @@
 #define EVENT_MAC_STATISTICS_RSP     230
 #define EVENT_MAC_STATISTICS_IND     231
 
+/* ======== small cell integration ======== */
+#ifdef NFAPI
+#include "nfapi_vnf_interface.h"
+#define EVENT_MAC_VNF_CONFIG_REQ     22000 // A Largest number for now
+#endif // NFAPI
+/* ======================================== */
+
 #define BSR_PERIODIC_TIMER_SF_10 10
 #define BSR_RETX_TIMER_SF_320 320
 #define BSR_SR_DELAY_TMR_2560 2560
 
 #define PAGING_SCHED_DELTA  4
 #define MAX_PLMN 2
-
-/* ======== small cell integration ======== */
-# ifdef NFAPI
-#include "nfapi_vnf_interface.h"
-#define EVENT_MAC_VNF_CONFIG_REQ     220
-#endif
-/* ======================================== */
 
 /********************* Global Variable ********************/
 uint64_t ueBitMapPerCell[MAX_NUM_CELL]; /* Bit Map to store used/free UE-IDX per Cell */
@@ -2083,11 +2083,11 @@ typedef uint8_t (*MacDuStatsIndFunc) ARGS((
 /* Functions pointers for packing macvnfCfg Request */
 typedef uint8_t (*packMacVnfCfgReq) ARGS((
 	   Pst *pst,
-	   p5_p7_cfg *vnf_config ));
+	   vnf_cfg_t *vnf_config ));
 
 typedef uint8_t (*DuMacVnfCfgReq) ARGS((
 	   Pst *pst,        
-	   p5_p7_cfg *vnf_config));
+	   vnf_cfg_t *vnf_config));
 
 #endif
 /* ======================================== */
@@ -2229,9 +2229,9 @@ uint8_t unpackDuMacStatsInd(MacDuStatsIndFunc func, Pst *pst, Buffer *mBuf);
 
 /* ======== small cell integration ======== */
 #ifdef NFAPI
-uint8_t packMacVnfCfg(Pst* pst, p5_p7_cfg* vnf_config);
+uint8_t packMacVnfCfg(Pst* pst, vnf_cfg_t* vnf_config);
 uint8_t unpackDuMacVnfCfg(DuMacVnfCfgReq func, Pst* pst, Buffer* mBuf);
-uint8_t MacProcVnfCfgReq(Pst* pst, p5_p7_cfg* vnf_config);
+uint8_t MacProcVnfCfgReq(Pst* pst, vnf_cfg_t* vnf_config);
 #endif
 /* ======================================== */
 

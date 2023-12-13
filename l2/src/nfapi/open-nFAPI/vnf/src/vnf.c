@@ -465,14 +465,14 @@ void vnf_nr_handle_param_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_conf
 				intgr_resp = &msg;
                 intgr_p5_idx = p5_idx;
                 
-                if (!pnf_running_flag->flag && intgr_resp)
+                if (!pnf_state_lock->flag && intgr_resp)
                 {   
-                    printf("\n[NFAPI VNF]  ->  The PNF has been running, set FALG to %d", pnf_running_flag->flag);
-                    pthread_mutex_lock( &pnf_running_flag->mutex ); 
-                    pnf_running_flag->flag = 1;
-                    pthread_cond_signal(&pnf_running_flag->cond);
-                    pthread_mutex_unlock( &pnf_running_flag->mutex );
-                    printf("\n[NFAPI VNF]  ->  The PNF has been running, set FALG to %d", pnf_running_flag->flag);
+                    printf("\n[NFAPI VNF]  ->  The PNF has been running, set FALG to %d", pnf_state_lock->flag);
+                    pthread_mutex_lock( &pnf_state_lock->mutex ); 
+                    pnf_state_lock->flag = 1;
+                    pthread_cond_signal(&pnf_state_lock->cond);
+                    pthread_mutex_unlock( &pnf_state_lock->mutex );
+                    printf("\n[NFAPI VNF]  ->  The PNF has been running, set FALG to %d", pnf_state_lock->flag);
                 }
                 #else
 				/* ========================================= */

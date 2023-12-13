@@ -1445,6 +1445,45 @@ uint8_t duHdlSchCfgComplete(Pst *pst, RgMngmt *cfm)
    return ROK;
 }
 
+/* ======== small cell integration ======== */
+#ifdef NFAPI
+/**************************************************************************
+ * @brief Function to fill and send  VnfCfg
+ *
+ * @details
+ *
+ *      Function : duBuildAndSendMacVnfCfg()
+ *
+ *      Functionality:
+ *           Initiates VNF Configs towards MAC
+ *
+ *
+ * @param[in]  void
+ * @return ROK     - success
+ *         RFAILED - failure
+ *
+ ***************************************************************************/
+uint8_t duBuildAndSendMacVnfCfg()
+{
+   Pst pst;
+   vnf_cfg_t *vnf_config = NULLP;
+   DU_ALLOC_SHRABL_BUF(vnf_config, sizeof(vnf_cfg_t));
+
+   if (vnf_config == NULLP) return RFAILED;
+
+   extern vnf_cfg_t *nfapi_vnf_cfg; // defined in du_cfg.c
+   memcpy(vnf_config, nfapi_vnf_cfg, sizeof(vnf_cfg_t));
+
+   /* Fill Pst */
+   FILL_PST_DUAPP_TO_MAC(pst, EVENT_MAC_VNF_CONFIG_REQ);
+
+   /* Send MAC vnf config to MAC*/
+   return (*packMacVnfCfgOpts[0])(&pst, vnf_config);
+}
+
+#endif
+/*********************************************/
+
 /**************************************************************************
  * @brief Function to fill and send MacCellconfig
  *
@@ -2283,50 +2322,6 @@ uint8_t DuProcMacStatsInd(Pst *pst, MacStatsInd *statsInd)
    }
    return ret;
 }
-
-/* ======== small cell integration ======== */
-#ifdef NFAPI
-/* Add functions below */
-
-/**************************************************************************
- * @brief Function to fill and send  VnfCfg
- *
- * @details
- *
- *      Function : duBuildAndSendMacVnfCfg()
- *
- *      Functionality:
- *           Initiates VNF Configs towards MAC
- *
- *
- * @param[in]  void
- * @return ROK     - success
- *         RFAILED - failure
- *
- ***************************************************************************/
-uint8_t duBuildAndSendMacVnfCfg()
-{
-   Pst pst;
-   p5_p7_cfg *vnf_config = NULLP;
-
-   DU_ALLOC_SHRABL_BUF(vnf_config, sizeof(p5_p7_cfg));
-   if (vnf_config == NULLP)
-   {
-      return RFAILED;
-   }
-
-   extern p5_p7_cfg *nfapi_p5_p7_cfg; // defined in du_cfg.c
-   memcpy(vnf_config, nfapi_p5_p7_cfg, sizeof(p5_p7_cfg));
-
-   /* Fill Pst */
-   FILL_PST_DUAPP_TO_MAC(pst, EVENT_MAC_VNF_CONFIG_REQ);
-
-   /* Send MAC vnf config to MAC*/
-   return (*packMacVnfCfgOpts[0])(&pst, vnf_config);
-}
-
-#endif
-/*********************************************/
 
 /**********************************************************************
   End of file
