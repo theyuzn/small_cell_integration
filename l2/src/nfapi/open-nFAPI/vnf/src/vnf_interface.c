@@ -74,7 +74,7 @@ int nfapi_nr_vnf_start(nfapi_vnf_config_t* config)
 	if(config == 0)
 		return -1;
 
-	DU_LOG("[NFAPI VNF INTERFACE]  %s()\n", __FUNCTION__);
+	DU_LOG("\n[NFAPI] VNF Interface --> %s()\n", __FUNCTION__);
 
 	int p5ListenSock, p5Sock; 
 
@@ -94,88 +94,7 @@ int nfapi_nr_vnf_start(nfapi_vnf_config_t* config)
 
 	vnf_t* vnf = (vnf_t*)(config);
 
-	DU_LOG("[NFAPI VNF INTERFACE]  Starting P5 VNF connection on port %u\n", config->vnf_p5_port);
-
-	/*
-	char * host = 0;
-	char * port = "4242";
-	struct addrinfo hints;
-	bzero(&hints, sizeof(struct addrinfo));
-	//hints.ai_flags=AI_PASSIVE;
-	//hints.ai_flags=AI_DEFAULT;
-	hints.ai_family=AF_UNSPEC;
-	//hints.ai_family=AF_INET6;
-	hints.ai_socktype=SOCK_STREAM;
-	//hints.ai_protocol=IPPROTO_SCTP
-
-	struct addrinfo *aiHead = 0;
-
-
-
-	int result = getaddrinfo(host, port, &hints, &aiHead);
-	DU_LOG("[NFAPI VNF INTERFACE]  getaddrinfo return %d %d\n", result, errno);
-
-	while(aiHead->ai_next != NULL)
-	{
-		DU_LOG("[NFAPI VNF INTERFACE]  addr info %d (IP %d UDP %d SCTP %d)\n %d (%d)\n", 
-				aiHead->ai_protocol, IPPROTO_IP, IPPROTO_UDP, IPPROTO_SCTP, 
-				aiHead->ai_flags, AI_PASSIVE);
-
-		char hostBfr[ NI_MAXHOST ];
-		char servBfr[ NI_MAXSERV ];
-
-		getnameinfo(aiHead->ai_addr,
-				aiHead->ai_addrlen,
-				hostBfr,
-				sizeof( hostBfr ),
-				servBfr,
-				sizeof( servBfr ),
-				NI_NUMERICHOST | NI_NUMERICSERV );
-
-		switch(aiHead->ai_family)
-		{
-			case PF_INET:
-				{
-				struct sockaddr_in *pSadrIn = (struct sockaddr_in*) aiHead->ai_addr;
-				printf(
-						"   ai_addr      = sin_family: %d (AF_INET = %d, "
-						"AF_INET6 = %d)\n"
-						"                  sin_addr:   %s\n"
-						"                  sin_port:   %s\n",
-						pSadrIn->sin_family,
-						AF_INET,
-						AF_INET6,
-						hostBfr,
-						servBfr );
-				}
-				break;
-			case PF_INET6:
-				{
-				struct sockaddr_in6 *pSadrIn6 = (struct sockaddr_in6*) aiHead->ai_addr;
-				fprintf( stderr,
-						"   ai_addr      = sin6_family:   %d (AF_INET = %d, "
-						"AF_INET6 = %d) \n"
-						"                  sin6_addr:     %s\n"
-						"                  sin6_port:     %s\n"
-						"                  sin6_flowinfo: %d\n"
-						"                  sin6_scope_id: %d\n",
-						pSadrIn6->sin6_family,
-						AF_INET,
-						AF_INET6,
-						hostBfr,
-						servBfr,
-						pSadrIn6->sin6_flowinfo,
-						pSadrIn6->sin6_scope_id);
-				}
-				break;
-			default:
-				DU_LOG("[NFAPI VNF INTERFACE]  Not ment to be here\n");
-				break;
-		}
-
-		aiHead = aiHead->ai_next;
-	}
-	*/
+	DU_LOG("\n[NFAPI] VNF Interface --> Starting P5 VNF connection on port %u\n", config->vnf_p5_port);
 
 	{
 		int protocol;
@@ -198,10 +117,10 @@ int nfapi_nr_vnf_start(nfapi_vnf_config_t* config)
 		// open the SCTP socket
 		if ((p5ListenSock = socket(domain, SOCK_STREAM, protocol)) < 0)
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "After P5 socket errno: %d\n", errno);
+			DU_LOG("\n[NFAPI] VNF Interface --> After P5 socket errno: %d\n", errno);
 			return 0;
 		}
-		DU_LOG("[NFAPI VNF INTERFACE]  P5 socket created... %d\n", p5ListenSock);
+		DU_LOG("\n[NFAPI] VNF Interface --> P5 socket created... %d\n", p5ListenSock);
 	}
 
 	if (vnf->sctp)
@@ -209,24 +128,24 @@ int nfapi_nr_vnf_start(nfapi_vnf_config_t* config)
 		// configure for MSG_NOTIFICATION
 		if (setsockopt(p5ListenSock, IPPROTO_SCTP, SCTP_EVENTS, &events, sizeof(struct sctp_event_subscribe)) < 0)
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "After setsockopt (SCTP_EVENTS) errno: %d\n", errno);
+			DU_LOG("\n[NFAPI] VNF Interface --> After setsockopt (SCTP_EVENTS) errno: %d\n", errno);
 			close(p5ListenSock);
 			return 0;
 		}
-		NFAPI_TRACE(NFAPI_TRACE_NOTE, "VNF Setting the SCTP_INITMSG\n");
+		DU_LOG("\n[NFAPI] VNF Interface --> VNF Setting the SCTP_INITMSG\n");
 		// configure the SCTP socket options
 		initMsg.sinit_num_ostreams = 5; //MAX_SCTP_STREAMS;  // number of output streams can be greater
 		initMsg.sinit_max_instreams = 5; //MAX_SCTP_STREAMS;  // number of output streams can be greater
 		if (setsockopt(p5ListenSock, IPPROTO_SCTP, SCTP_INITMSG, &initMsg, sizeof(initMsg)) < 0)
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "After setsockopt (SCTP_INITMSG) errno: %d\n", errno);
+			DU_LOG("\n[NFAPI] VNF Interface --> After setsockopt (SCTP_INITMSG) errno: %d\n", errno);
 			close(p5ListenSock);
 			return 0;
 		}
 		noDelay = 1;
 		if (setsockopt(p5ListenSock, IPPROTO_SCTP, SCTP_NODELAY, &noDelay, sizeof(noDelay)) < 0)
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "After setsockopt (STCP_NODELAY) errno: %d\n", errno);
+			DU_LOG("\n[NFAPI] VNF Interface --> After setsockopt (STCP_NODELAY) errno: %d\n", errno);
 			close(p5ListenSock);
 			return 0;
 		}
@@ -236,7 +155,7 @@ int nfapi_nr_vnf_start(nfapi_vnf_config_t* config)
 		
 		if(setsockopt(p5ListenSock, SOL_SCTP, SCTP_EVENTS, (const void *)&events, sizeof(events)) < 0)
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "After setsockopt errno: %d\n", errno);
+			DU_LOG("\n[NFAPI] VNF Interface --> After setsockopt errno: %d\n", errno);
 			close(p5ListenSock);
 			return -1;
 		}
@@ -246,7 +165,7 @@ int nfapi_nr_vnf_start(nfapi_vnf_config_t* config)
 
 	if(config->vnf_ipv6)
 	{
-		DU_LOG("[NFAPI VNF INTERFACE]  IPV6 binding to port %d %d\n", config->vnf_p5_port, p5ListenSock);
+		DU_LOG("\n[NFAPI] VNF Interface --> IPV6 binding to port %d %d\n", config->vnf_p5_port, p5ListenSock);
 		addr6.sin6_family = AF_INET6;
 		addr6.sin6_port = htons(config->vnf_p5_port);
 		addr6.sin6_addr = in6addr_any;
@@ -254,14 +173,14 @@ int nfapi_nr_vnf_start(nfapi_vnf_config_t* config)
 		// bind to the configured address and port
 		if (bind(p5ListenSock, (struct sockaddr *)&addr6, sizeof(struct sockaddr_in6)) < 0)
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "After bind errno: %d\n", errno);
+			DU_LOG("\n[NFAPI] VNF Interface --> After bind errno: %d\n", errno);
 			close(p5ListenSock);
 			return 0;
 		}
 	}
 	else if(config->vnf_ipv4)
 	{
-		DU_LOG("[NFAPI VNF INTERFACE]  IPV4 binding to port %d\n", config->vnf_p5_port);
+		DU_LOG("\n[NFAPI] VNF Interface --> IPV4 binding to port %d\n", config->vnf_p5_port);
 		addr.sin_family = AF_INET;
 		addr.sin_port = htons(config->vnf_p5_port);
 		addr.sin_addr.s_addr = INADDR_ANY;
@@ -270,23 +189,23 @@ int nfapi_nr_vnf_start(nfapi_vnf_config_t* config)
 		if (bind(p5ListenSock, (struct sockaddr *)&addr, sizeof(struct sockaddr_in)) < 0)
 		//if (sctp_bindx(p5ListenSock, (struct sockaddr *)&addr, sizeof(struct sockaddr_in), SCTP_BINDX_ADD_ADDR) < 0)
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "After bind errno: %d\n", errno);
+			DU_LOG("\n[NFAPI] VNF Interface --> After bind errno: %d\n", errno);
 			close(p5ListenSock);
 			return 0;
 		}
 	}
 
-	DU_LOG("[NFAPI VNF INTERFACE]  bind succeeded..%d.\n", p5ListenSock);
+	DU_LOG("\n[NFAPI] VNF Interface --> bind succeeded..%d.\n", p5ListenSock);
 
 	// put the socket into listen mode
 	if (listen(p5ListenSock, 2) < 0) 
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "After listen errno: %d\n", errno);
+		DU_LOG("\n[NFAPI] VNF Interface --> After listen errno: %d\n", errno);
 		close(p5ListenSock);
 		return 0;
 	}
 
-	DU_LOG("[NFAPI VNF INTERFACE]  listen succeeded...\n");
+	DU_LOG("\n[NFAPI] VNF Interface --> listen succeeded...\n");
 
 	struct timeval tv;
 	fd_set read_fd_set;
@@ -322,7 +241,7 @@ int nfapi_nr_vnf_start(nfapi_vnf_config_t* config)
 
 		if(select_result == -1)
 		{
-			DU_LOG("[NFAPI VNF INTERFACE]  select result %d errno %d\n", select_result, errno);
+			DU_LOG("\n[NFAPI] VNF Interface --> select result %d errno %d\n", select_result, errno);
 			close(p5ListenSock);
 			return 0;
 		}
@@ -331,19 +250,19 @@ int nfapi_nr_vnf_start(nfapi_vnf_config_t* config)
 			if(FD_ISSET(p5ListenSock, &read_fd_set))
 			{
 				addrSize = sizeof(struct sockaddr_in);
-				DU_LOG("[NFAPI VNF INTERFACE]  Accepting connection from PNF...\n");
+				DU_LOG("\n[NFAPI] VNF Interface --> Accepting connection from PNF...\n");
 
 				p5Sock = accept(p5ListenSock, (struct sockaddr *)&addr, &addrSize);
 
 				if (p5Sock < 0) 
 				{
-					NFAPI_TRACE(NFAPI_TRACE_ERROR, "Failed to accept PNF connection reason:%d\n", errno);
+					DU_LOG("\n[NFAPI] VNF Interface --> Failed to accept PNF connection reason:%d\n", errno);
 				}
 				else
 				{
-					DU_LOG("[NFAPI VNF INTERFACE]  PNF connection (fd:%d) accepted from %s:%d \n", p5Sock,  inet_ntoa(addr.sin_addr), ntohs(addr.sin_port));
+					DU_LOG("\n[NFAPI] VNF Interface --> PNF connection (fd:%d) accepted from %s:%d \n", p5Sock,  inet_ntoa(addr.sin_addr), ntohs(addr.sin_port));
 					nfapi_vnf_pnf_info_t* pnf = (nfapi_vnf_pnf_info_t*)malloc(sizeof(nfapi_vnf_pnf_info_t));
-					DU_LOG("[NFAPI VNF INTERFACE]  MALLOC nfapi_vnf_pnf_info_t for pnf_list pnf:%p\n", pnf);
+					DU_LOG("\n[NFAPI] VNF Interface --> MALLOC nfapi_vnf_pnf_info_t for pnf_list pnf:%p\n", pnf);
 					memset(pnf, 0, sizeof(nfapi_vnf_pnf_info_t));
 					pnf->p5_sock = p5Sock;
 					pnf->p5_idx = p5_idx++;
@@ -368,15 +287,15 @@ int nfapi_nr_vnf_start(nfapi_vnf_config_t* config)
 						socklen_t optLen = (socklen_t) sizeof(struct sctp_status);
 						if (getsockopt(p5Sock, IPPROTO_SCTP, SCTP_STATUS, &status, &optLen) < 0)
 						{
-							NFAPI_TRACE(NFAPI_TRACE_ERROR, "After getsockopt errno: %d\n", errno);
+							DU_LOG("\n[NFAPI] VNF Interface --> After getsockopt errno: %d\n", errno);
 							return -1;
 						}
 						else
 						{
-							DU_LOG("[NFAPI VNF INTERFACE]  VNF Association ID = %d\n", status.sstat_assoc_id);
-							DU_LOG("[NFAPI VNF INTERFACE]  VNF Receiver window size = %d\n", status.sstat_rwnd);
-							DU_LOG("[NFAPI VNF INTERFACE]  VNF In Streams = %d\n",  status.sstat_instrms);
-							DU_LOG("[NFAPI VNF INTERFACE]  VNF Out Streams = %d\n", status.sstat_outstrms);
+							DU_LOG("\n[NFAPI] VNF Interface --> VNF Association ID = %d\n", status.sstat_assoc_id);
+							DU_LOG("\n[NFAPI] VNF Interface --> VNF Receiver window size = %d\n", status.sstat_rwnd);
+							DU_LOG("\n[NFAPI] VNF Interface --> VNF In Streams = %d\n",  status.sstat_instrms);
+							DU_LOG("\n[NFAPI] VNF Interface --> VNF Out Streams = %d\n", status.sstat_outstrms);
 
 						}
 					}
@@ -454,7 +373,7 @@ int nfapi_nr_vnf_start(nfapi_vnf_config_t* config)
 		}
 	}
 
-	DU_LOG("[NFAPI VNF INTERFACE]  Closing p5Sock socket's\n");
+	DU_LOG("\n[NFAPI] VNF Interface --> Closing p5Sock socket's\n");
 	{
 		nfapi_vnf_pnf_info_t* curr = config->pnf_list;
 		while(curr != NULL)
@@ -469,7 +388,7 @@ int nfapi_nr_vnf_start(nfapi_vnf_config_t* config)
 		}
 	}
 
-	DU_LOG("[NFAPI VNF INTERFACE]  Closing p5Listen socket\n");
+	DU_LOG("\n[NFAPI] VNF Interface --> Closing p5Listen socket\n");
 	close(p5ListenSock);
 		
 	return 0;
@@ -479,7 +398,7 @@ int nfapi_nr_vnf_start(nfapi_vnf_config_t* config)
 int nfapi_vnf_start(nfapi_vnf_config_t* config)
 {
 	assert(config != 0);
-	DU_LOG("[NFAPI VNF INTERFACE]  %s()\n", __FUNCTION__);
+	DU_LOG("\n[NFAPI] VNF Interface --> %s()\n", __FUNCTION__);
 
 	int p5ListenSock, p5Sock; 
 
@@ -499,7 +418,7 @@ int nfapi_vnf_start(nfapi_vnf_config_t* config)
 
 	vnf_t* vnf = (vnf_t*)(config);
 
-	DU_LOG("[NFAPI VNF INTERFACE]  Starting P5 VNF connection on port %u\n", config->vnf_p5_port);
+	DU_LOG("\n[NFAPI] VNF Interface --> Starting P5 VNF connection on port %u\n", config->vnf_p5_port);
 
 	/*
 	char * host = 0;
@@ -518,11 +437,11 @@ int nfapi_vnf_start(nfapi_vnf_config_t* config)
 
 
 	int result = getaddrinfo(host, port, &hints, &aiHead);
-	DU_LOG("[NFAPI VNF INTERFACE]  getaddrinfo return %d %d\n", result, errno);
+	DU_LOG("\n[NFAPI] VNF Interface --> getaddrinfo return %d %d\n", result, errno);
 
 	while(aiHead->ai_next != NULL)
 	{
-		DU_LOG("[NFAPI VNF INTERFACE]  addr info %d (IP %d UDP %d SCTP %d)\n %d (%d)\n", 
+		DU_LOG("\n[NFAPI] VNF Interface --> addr info %d (IP %d UDP %d SCTP %d)\n %d (%d)\n", 
 				aiHead->ai_protocol, IPPROTO_IP, IPPROTO_UDP, IPPROTO_SCTP, 
 				aiHead->ai_flags, AI_PASSIVE);
 
@@ -574,7 +493,7 @@ int nfapi_vnf_start(nfapi_vnf_config_t* config)
 				}
 				break;
 			default:
-				DU_LOG("[NFAPI VNF INTERFACE]  Not ment to be here\n");
+				DU_LOG("\n[NFAPI] VNF Interface --> Not ment to be here\n");
 				break;
 		}
 
@@ -603,10 +522,10 @@ int nfapi_vnf_start(nfapi_vnf_config_t* config)
 		// open the SCTP socket
 		if ((p5ListenSock = socket(domain, SOCK_STREAM, protocol)) < 0)
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "After P5 socket errno: %d\n", errno);
+			DU_LOG("\n[NFAPI] VNF Interface --> After P5 socket errno: %d\n", errno);
 			return 0;
 		}
-		DU_LOG("[NFAPI VNF INTERFACE]  P5 socket created... %d\n", p5ListenSock);
+		DU_LOG("\n[NFAPI] VNF Interface --> P5 socket created... %d\n", p5ListenSock);
 	}
 
 	if (vnf->sctp)
@@ -614,24 +533,24 @@ int nfapi_vnf_start(nfapi_vnf_config_t* config)
 		// configure for MSG_NOTIFICATION
 		if (setsockopt(p5ListenSock, IPPROTO_SCTP, SCTP_EVENTS, &events, sizeof(struct sctp_event_subscribe)) < 0)
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "After setsockopt (SCTP_EVENTS) errno: %d\n", errno);
+			DU_LOG("\n[NFAPI] VNF Interface --> After setsockopt (SCTP_EVENTS) errno: %d\n", errno);
 			close(p5ListenSock);
 			return 0;
 		}
-		NFAPI_TRACE(NFAPI_TRACE_NOTE, "VNF Setting the SCTP_INITMSG\n");
+		DU_LOG("\n[NFAPI] VNF Interface --> VNF Setting the SCTP_INITMSG\n");
 		// configure the SCTP socket options
 		initMsg.sinit_num_ostreams = 5; //MAX_SCTP_STREAMS;  // number of output streams can be greater
 		initMsg.sinit_max_instreams = 5; //MAX_SCTP_STREAMS;  // number of output streams can be greater
 		if (setsockopt(p5ListenSock, IPPROTO_SCTP, SCTP_INITMSG, &initMsg, sizeof(initMsg)) < 0)
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "After setsockopt (SCTP_INITMSG) errno: %d\n", errno);
+			DU_LOG("\n[NFAPI] VNF Interface --> After setsockopt (SCTP_INITMSG) errno: %d\n", errno);
 			close(p5ListenSock);
 			return 0;
 		}
 		noDelay = 1;
 		if (setsockopt(p5ListenSock, IPPROTO_SCTP, SCTP_NODELAY, &noDelay, sizeof(noDelay)) < 0)
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "After setsockopt (STCP_NODELAY) errno: %d\n", errno);
+			DU_LOG("\n[NFAPI] VNF Interface --> After setsockopt (STCP_NODELAY) errno: %d\n", errno);
 			close(p5ListenSock);
 			return 0;
 		}
@@ -641,7 +560,7 @@ int nfapi_vnf_start(nfapi_vnf_config_t* config)
 		
 		if(setsockopt(p5ListenSock, SOL_SCTP, SCTP_EVENTS, (const void *)&events, sizeof(events)) < 0)
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "After setsockopt errno: %d\n", errno);
+			DU_LOG("\n[NFAPI] VNF Interface --> After setsockopt errno: %d\n", errno);
 			close(p5ListenSock);
 			return -1;
 		}
@@ -651,7 +570,7 @@ int nfapi_vnf_start(nfapi_vnf_config_t* config)
 
 	if(config->vnf_ipv6)
 	{
-		DU_LOG("[NFAPI VNF INTERFACE]  IPV6 binding to port %d %d\n", config->vnf_p5_port, p5ListenSock);
+		DU_LOG("\n[NFAPI] VNF Interface --> IPV6 binding to port %d %d\n", config->vnf_p5_port, p5ListenSock);
 		addr6.sin6_family = AF_INET6;
 		addr6.sin6_port = htons(config->vnf_p5_port);
 		addr6.sin6_addr = in6addr_any;
@@ -659,14 +578,14 @@ int nfapi_vnf_start(nfapi_vnf_config_t* config)
 		// bind to the configured address and port
 		if (bind(p5ListenSock, (struct sockaddr *)&addr6, sizeof(struct sockaddr_in6)) < 0)
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "After bind errno: %d\n", errno);
+			DU_LOG("\n[NFAPI] VNF Interface --> After bind errno: %d\n", errno);
 			close(p5ListenSock);
 			return 0;
 		}
 	}
 	else if(config->vnf_ipv4)
 	{
-		DU_LOG("[NFAPI VNF INTERFACE]  IPV4 binding to port %d\n", config->vnf_p5_port);
+		DU_LOG("\n[NFAPI] VNF Interface --> IPV4 binding to port %d\n", config->vnf_p5_port);
 		addr.sin_family = AF_INET;
 		addr.sin_port = htons(config->vnf_p5_port);
 		addr.sin_addr.s_addr = INADDR_ANY;
@@ -675,23 +594,23 @@ int nfapi_vnf_start(nfapi_vnf_config_t* config)
 		if (bind(p5ListenSock, (struct sockaddr *)&addr, sizeof(struct sockaddr_in)) < 0)
 		//if (sctp_bindx(p5ListenSock, (struct sockaddr *)&addr, sizeof(struct sockaddr_in), SCTP_BINDX_ADD_ADDR) < 0)
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "After bind errno: %d\n", errno);
+			DU_LOG("\n[NFAPI] VNF Interface --> After bind errno: %d\n", errno);
 			close(p5ListenSock);
 			return 0;
 		}
 	}
 
-	DU_LOG("[NFAPI VNF INTERFACE]  bind succeeded..%d.\n", p5ListenSock);
+	DU_LOG("\n[NFAPI] VNF Interface --> bind succeeded..%d.\n", p5ListenSock);
 
 	// put the socket into listen mode
 	if (listen(p5ListenSock, 2) < 0) 
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "After listen errno: %d\n", errno);
+		DU_LOG("\n[NFAPI] VNF Interface --> After listen errno: %d\n", errno);
 		close(p5ListenSock);
 		return 0;
 	}
 
-	DU_LOG("[NFAPI VNF INTERFACE]  listen succeeded...\n");
+	DU_LOG("\n[NFAPI] VNF Interface --> listen succeeded...\n");
 
 	struct timeval tv;
 	fd_set read_fd_set;
@@ -727,7 +646,7 @@ int nfapi_vnf_start(nfapi_vnf_config_t* config)
 
 		if(select_result == -1)
 		{
-			DU_LOG("[NFAPI VNF INTERFACE]  select result %d errno %d\n", select_result, errno);
+			DU_LOG("\n[NFAPI] VNF Interface --> select result %d errno %d\n", select_result, errno);
 			close(p5ListenSock);
 			return 0;
 		}
@@ -736,19 +655,19 @@ int nfapi_vnf_start(nfapi_vnf_config_t* config)
 			if(FD_ISSET(p5ListenSock, &read_fd_set))
 			{
 				addrSize = sizeof(struct sockaddr_in);
-				DU_LOG("[NFAPI VNF INTERFACE]  Accepting connection from PNF...\n");
+				DU_LOG("\n[NFAPI] VNF Interface --> Accepting connection from PNF...\n");
 
 				p5Sock = accept(p5ListenSock, (struct sockaddr *)&addr, &addrSize);
 
 				if (p5Sock < 0) 
 				{
-					NFAPI_TRACE(NFAPI_TRACE_ERROR, "Failed to accept PNF connection reason:%d\n", errno);
+					DU_LOG("\n[NFAPI] VNF Interface --> Failed to accept PNF connection reason:%d\n", errno);
 				}
 				else
 				{
-					DU_LOG("[NFAPI VNF INTERFACE]  PNF connection (fd:%d) accepted from %s:%d \n", p5Sock,  inet_ntoa(addr.sin_addr), ntohs(addr.sin_port));
+					DU_LOG("\n[NFAPI] VNF Interface --> PNF connection (fd:%d) accepted from %s:%d \n", p5Sock,  inet_ntoa(addr.sin_addr), ntohs(addr.sin_port));
 					nfapi_vnf_pnf_info_t* pnf = (nfapi_vnf_pnf_info_t*)malloc(sizeof(nfapi_vnf_pnf_info_t));
-					DU_LOG("[NFAPI VNF INTERFACE]  MALLOC nfapi_vnf_pnf_info_t for pnf_list pnf:%p\n", pnf);
+					DU_LOG("\n[NFAPI] VNF Interface --> MALLOC nfapi_vnf_pnf_info_t for pnf_list pnf:%p\n", pnf);
 					memset(pnf, 0, sizeof(nfapi_vnf_pnf_info_t));
 					pnf->p5_sock = p5Sock;
 					pnf->p5_idx = p5_idx++;
@@ -773,15 +692,15 @@ int nfapi_vnf_start(nfapi_vnf_config_t* config)
 						socklen_t optLen = (socklen_t) sizeof(struct sctp_status);
 						if (getsockopt(p5Sock, IPPROTO_SCTP, SCTP_STATUS, &status, &optLen) < 0)
 						{
-							NFAPI_TRACE(NFAPI_TRACE_ERROR, "After getsockopt errno: %d\n", errno);
+							DU_LOG("\n[NFAPI] VNF Interface --> After getsockopt errno: %d\n", errno);
 							return -1;
 						}
 						else
 						{
-							DU_LOG("[NFAPI VNF INTERFACE]  VNF Association ID = %d\n", status.sstat_assoc_id);
-							DU_LOG("[NFAPI VNF INTERFACE]  VNF Receiver window size = %d\n", status.sstat_rwnd);
-							DU_LOG("[NFAPI VNF INTERFACE]  VNF In Streams = %d\n",  status.sstat_instrms);
-							DU_LOG("[NFAPI VNF INTERFACE]  VNF Out Streams = %d\n", status.sstat_outstrms);
+							DU_LOG("\n[NFAPI] VNF Interface --> VNF Association ID = %d\n", status.sstat_assoc_id);
+							DU_LOG("\n[NFAPI] VNF Interface --> VNF Receiver window size = %d\n", status.sstat_rwnd);
+							DU_LOG("\n[NFAPI] VNF Interface --> VNF In Streams = %d\n",  status.sstat_instrms);
+							DU_LOG("\n[NFAPI] VNF Interface --> VNF Out Streams = %d\n", status.sstat_outstrms);
 
 						}
 					}
@@ -859,7 +778,7 @@ int nfapi_vnf_start(nfapi_vnf_config_t* config)
 		}
 	}
 
-	DU_LOG("[NFAPI VNF INTERFACE]  Closing p5Sock socket's\n");
+	DU_LOG("\n[NFAPI] VNF Interface --> Closing p5Sock socket's\n");
 	{
 		nfapi_vnf_pnf_info_t* curr = config->pnf_list;
 		while(curr != NULL)
@@ -874,7 +793,7 @@ int nfapi_vnf_start(nfapi_vnf_config_t* config)
 		}
 	}
 
-	DU_LOG("[NFAPI VNF INTERFACE]  Closing p5Listen socket\n");
+	DU_LOG("\n[NFAPI] VNF Interface --> Closing p5Listen socket\n");
 	close(p5ListenSock);
 		
 	return 0;
