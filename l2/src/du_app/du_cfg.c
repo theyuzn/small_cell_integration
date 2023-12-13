@@ -1110,18 +1110,20 @@ uint8_t readVnfCfg()
    nfapi_vnf_cfg->config->pnf_list = 0;
    nfapi_vnf_cfg->config->phy_list = 0;
 
-   nfapi_vnf_cfg->config->pnf_connection_indication = &pnf_nr_connection_indication_cb;
+   nfapi_vnf_cfg->config->pnf_nr_connection_indication = &pnf_nr_connection_indication_cb;
    nfapi_vnf_cfg->config->pnf_disconnect_indication = &pnf_disconnection_indication_cb;
-   nfapi_vnf_cfg->config->pnf_param_resp = &pnf_nr_param_resp_cb;
-   nfapi_vnf_cfg->config->pnf_config_resp = &pnf_nr_config_resp_cb;
-   nfapi_vnf_cfg->config->pnf_start_resp = &pnf_nr_start_resp_cb;
+   nfapi_vnf_cfg->config->pnf_nr_param_resp = &pnf_nr_param_resp_cb;
+   nfapi_vnf_cfg->config->pnf_nr_config_resp = &pnf_nr_config_resp_cb;
+   nfapi_vnf_cfg->config->pnf_nr_start_resp = &pnf_nr_start_resp_cb;
 
-   nfapi_vnf_cfg->config->pnf_param_resp = &nr_param_resp_cb;
-   nfapi_vnf_cfg->config->pnf_config_resp = &nr_config_resp_cb;
-   nfapi_vnf_cfg->config->pnf_start_resp = &nr_start_resp_cb;
+   nfapi_vnf_cfg->config->pnf_nr_param_resp = &nr_param_resp_cb;
+   nfapi_vnf_cfg->config->pnf_nr_config_resp = &nr_config_resp_cb;
+   nfapi_vnf_cfg->config->pnf_nr_start_resp = &nr_start_resp_cb;
    nfapi_vnf_cfg->config->intgr_nr_config_resp = &intgr_lwr_mac_procConfigRspEvt;
    nfapi_vnf_cfg->config->intgr_nr_start_resp = &intgr_lwr_mac_procStartRspEvt;
    nfapi_vnf_cfg->config->user_data = nfapi_vnf_cfg->vnf;
+
+
 
    // config->codec_config.allocate = &vnf_allocate;
    // config->codec_config.deallocate = &vnf_deallocate;

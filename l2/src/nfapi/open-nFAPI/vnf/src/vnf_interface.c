@@ -275,6 +275,8 @@ int nfapi_nr_vnf_start(nfapi_vnf_config_t* config)
 					// Inform mac that a pnf connection has been established
 					// todo : allow mac to 'accept' the connection. i.e. to
 					// reject it.
+					DU_LOG("\n[INFO]   --> [VNF_Interface] %d in %s", 
+						(config->pnf_nr_connection_indication != 0), __FUNCTION__);
 					if(config->pnf_nr_connection_indication != 0)
 					{
 						(config->pnf_nr_connection_indication)(config, pnf->p5_idx);
