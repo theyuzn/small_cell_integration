@@ -502,6 +502,7 @@ uint8_t MacProcSchCellCfgCfm(Pst *pst, SchCellCfgCfm *schCellCfgCfm)
       // Wait for PNF connection
       extern PNF_Lock_t *pnf_state_lock;
       while(!pnf_state_lock->flag){
+         sleep(1500);
          DU_LOG("\n[Small Cell] The NFAPI flag is set to YES and waiting for PNF connection ...\n");
          pthread_cond_wait( &(pnf_state_lock->cond), &(pnf_state_lock->mutex));
       }
