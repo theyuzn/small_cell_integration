@@ -13,6 +13,8 @@
         "string": "c",
         "string_view": "c",
         "stdint.h": "c",
-        "nfapi_vnf.h": "c"
+        "nfapi_vnf.h": "c",
+        "du_log.h": "c",
+        "type_def.h": "c"
     }
 }

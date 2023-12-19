@@ -1078,9 +1078,12 @@ uint8_t readCfg()
 
 uint8_t readVnfCfg()
 {  
-   // nfapi_vnf_cfg = (vnf_cfg_t*) calloc(1, sizeof(vnf_cfg_t));
-   // nfapi_vnf_cfg->vnf = (vnf_info*) calloc(1, sizeof(vnf_info));
-   // nfapi_vnf_cfg->config = (nfapi_vnf_config_t*) calloc(1, sizeof(nfapi_vnf_config_t));
+
+
+   char* vnf_addr = "127.0.0.1";
+   int vnf_p5_port = 62324;
+   int vnf_p7_port = 50611;
+   configure_nr_nfapi_vnf(vnf_addr, vnf_p5_port, NULL, NULL, vnf_p7_port);
 
    DU_LOG("\nDEBUG   --> In function: %s",__FUNCTION__);
    DU_ALLOC_SHRABL_BUF(nfapi_vnf_cfg, sizeof(vnf_cfg_t));
