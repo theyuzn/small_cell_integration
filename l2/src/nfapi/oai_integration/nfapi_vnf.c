@@ -102,7 +102,7 @@ int pnf_connection_indication_cb(nfapi_vnf_config_t *config, int p5_idx) {
 }
 
 int pnf_nr_connection_indication_cb(nfapi_vnf_config_t *config, int p5_idx) {
-  DU_LOG("\nINFO   --> [VNF] pnf connection indication idx:%d\n", p5_idx);
+  DU_LOG("\nINFO   --> [VNF] pnf %d connection indication", p5_idx);
   nfapi_nr_pnf_param_request_t req;
   memset(&req, 0, sizeof(req));
   req.header.message_id = NFAPI_NR_PHY_MSG_TYPE_PNF_PARAM_REQUEST;
@@ -192,20 +192,20 @@ int pnf_config_resp_cb(nfapi_vnf_config_t *config, int p5_idx, nfapi_pnf_config_
 }
 
 
-extern pthread_cond_t nfapi_sync_cond;
-extern pthread_mutex_t nfapi_sync_mutex;
-extern int nfapi_sync_var;
+// extern pthread_cond_t nfapi_sync_cond;
+// extern pthread_mutex_t nfapi_sync_mutex;
+// extern int nfapi_sync_var;
 
 int phy_sync_indication(struct nfapi_vnf_p7_config *config, uint8_t sync) {
-  DU_LOG("\nINFO   --> [VNF] SYNC %s\n", sync==1 ? "ACHIEVED" : "LOST");
+  // DU_LOG("\nINFO   --> [VNF] SYNC %s\n", sync==1 ? "ACHIEVED" : "LOST");
   
-  if (sync==1 && nfapi_sync_var!=0) {
-    DU_LOG("\nINFO   --> [VNF] Signal to OAI main code that it can go\n");
-    pthread_mutex_lock(&nfapi_sync_mutex);
-    nfapi_sync_var=0;
-    pthread_cond_broadcast(&nfapi_sync_cond);
-    pthread_mutex_unlock(&nfapi_sync_mutex);
-  }
+  // if (sync == 1 && nfapi_sync_var!=0) {
+  //   DU_LOG("\nINFO   --> [VNF] Signal to OAI main code that it can go\n");
+  //   pthread_mutex_lock(&nfapi_sync_mutex);
+  //   nfapi_sync_var=0;
+  //   pthread_cond_broadcast(&nfapi_sync_cond);
+  //   pthread_mutex_unlock(&nfapi_sync_mutex);
+  // }
 
   return(0);
 }
