@@ -1257,11 +1257,11 @@ void vnf_deallocate_p4_p5_vendor_ext(nfapi_p4_p5_message_header_t *header) {
 }
 
 
-
 void vnf_nr_start_thread(void *ptr) {
-  DU_LOG("\nINFO   --> [VNF] VNF NFAPI thread - nfapi_vnf_start()%s\n", __FUNCTION__);
+  DU_LOG("\nINFO   --> [NFAPI VNF] Start VNF Thread\n");
   pthread_setname_np(pthread_self(), "VNF");
-  config = (nfapi_vnf_config_t *)ptr;
+  // set the global VNF config
+  config = (nfapi_vnf_config_t *)ptr; 
   nfapi_nr_vnf_start(config);
 }
 

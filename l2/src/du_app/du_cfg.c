@@ -68,7 +68,6 @@
 * The global variable definition
 **************************************
 */
-vnf_cfg_t *nfapi_vnf_cfg;
 #endif
 /*******************************************/
 
@@ -1078,58 +1077,12 @@ uint8_t readCfg()
 
 uint8_t readVnfCfg()
 {  
-
-
    char* vnf_addr = "127.0.0.1";
    int vnf_p5_port = 62324;
    int vnf_p7_port = 50611;
+
    configure_nr_nfapi_vnf(vnf_addr, vnf_p5_port, NULL, NULL, vnf_p7_port);
 
-   DU_LOG("\nDEBUG   --> In function: %s",__FUNCTION__);
-   DU_ALLOC_SHRABL_BUF(nfapi_vnf_cfg, sizeof(vnf_cfg_t));
-   DU_ALLOC_SHRABL_BUF(nfapi_vnf_cfg->vnf, sizeof(vnf_info));
-   DU_ALLOC_SHRABL_BUF(nfapi_vnf_cfg->config, sizeof(nfapi_vnf_config_t));
-
-   char* vnf_addr = "127.0.0.1";
-   int vnf_p5_port = 62324;
-   int vnf_p7_port = 50611;
-
-   // pending for struct vnf
-   nfapi_vnf_cfg->vnf->p7_vnfs[0].timing_window = 30;
-   nfapi_vnf_cfg->vnf->p7_vnfs[0].periodic_timing_enabled = 0;
-   nfapi_vnf_cfg->vnf->p7_vnfs[0].aperiodic_timing_enabled = 0;
-   nfapi_vnf_cfg->vnf->p7_vnfs[0].periodic_timing_period = 10;
-   nfapi_vnf_cfg->vnf->p7_vnfs[0].config = nfapi_vnf_p7_config_create();
-   strcpy(nfapi_vnf_cfg->vnf->p7_vnfs[0].local_addr, vnf_addr);
-   nfapi_vnf_cfg->vnf->p7_vnfs[0].local_port = vnf_p7_port;
-   nfapi_vnf_cfg->vnf->p7_vnfs[0].mac = (mac_t*)malloc(sizeof(mac_t));
-
-   nfapi_vnf_cfg->config = nfapi_vnf_config_create();
-   nfapi_vnf_cfg->config->malloc = malloc;
-   nfapi_vnf_cfg->config->free = free;
-   nfapi_vnf_cfg->config->vnf_p5_port = vnf_p5_port;
-   nfapi_vnf_cfg->config->vnf_ipv4 = 1;
-   nfapi_vnf_cfg->config->vnf_ipv6 = 0;
-   nfapi_vnf_cfg->config->pnf_list = 0;
-   nfapi_vnf_cfg->config->phy_list = 0;
-
-   nfapi_vnf_cfg->config->pnf_nr_connection_indication = &pnf_nr_connection_indication_cb;
-   nfapi_vnf_cfg->config->pnf_disconnect_indication = &pnf_disconnection_indication_cb;
-   nfapi_vnf_cfg->config->pnf_nr_param_resp = &pnf_nr_param_resp_cb;
-   nfapi_vnf_cfg->config->pnf_nr_config_resp = &pnf_nr_config_resp_cb;
-   nfapi_vnf_cfg->config->pnf_nr_start_resp = &pnf_nr_start_resp_cb;
-
-   nfapi_vnf_cfg->config->pnf_nr_param_resp = &nr_param_resp_cb;
-   nfapi_vnf_cfg->config->pnf_nr_config_resp = &nr_config_resp_cb;
-   nfapi_vnf_cfg->config->pnf_nr_start_resp = &nr_start_resp_cb;
-   nfapi_vnf_cfg->config->intgr_nr_config_resp = &intgr_lwr_mac_procConfigRspEvt;
-   nfapi_vnf_cfg->config->intgr_nr_start_resp = &intgr_lwr_mac_procStartRspEvt;
-   nfapi_vnf_cfg->config->user_data = nfapi_vnf_cfg->vnf;
-
-
-
-   // config->codec_config.allocate = &vnf_allocate;
-   // config->codec_config.deallocate = &vnf_deallocate;
    DU_LOG("\nINFO    --> [NFAPI] DU_APP: readVnfCfg() Conpleted");
    return ROK;
 }
