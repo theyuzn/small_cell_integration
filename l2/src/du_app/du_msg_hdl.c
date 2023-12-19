@@ -1467,7 +1467,7 @@ uint8_t duBuildAndSendMacVnfCfg()
    Pst pst; 
    vnf_cfg_t *vnf_config = NULLP;
    extern vnf_info            vnf;
-   extern nfapi_vnf_config_t config;
+   extern nfapi_vnf_config_t *config;
 
    DU_ALLOC_SHRABL_BUF(vnf_config, sizeof(vnf_cfg_t));
    DU_ALLOC_SHRABL_BUF(vnf_config->vnf, sizeof(vnf_info));
@@ -1475,7 +1475,7 @@ uint8_t duBuildAndSendMacVnfCfg()
 
    if (vnf_config == NULLP) return RFAILED;
 
-   memcpy(vnf_config->vnf, vnf, sizeof(vnf_info));
+   memcpy(vnf_config->vnf, &vnf, sizeof(vnf_info));
    memcpy(vnf_config->config, config, sizeof(nfapi_vnf_config_t));
 
    /* Fill Pst */
