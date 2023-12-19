@@ -67,7 +67,8 @@ do {                                                        \
 ****************************************************/
 static pthread_t    vnf_start_pthread;
 static pthread_t    vnf_p7_start_pthread;
-static vnf_info     vnf;
+
+vnf_info            vnf;
 nfapi_vnf_config_t *config = 0;
 /*
 * ==================================================

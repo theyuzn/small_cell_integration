@@ -1464,14 +1464,19 @@ uint8_t duHdlSchCfgComplete(Pst *pst, RgMngmt *cfm)
  ***************************************************************************/
 uint8_t duBuildAndSendMacVnfCfg()
 {
-   Pst pst;
+   Pst pst; 
    vnf_cfg_t *vnf_config = NULLP;
+   extern vnf_info            vnf;
+   extern nfapi_vnf_config_t config;
+
    DU_ALLOC_SHRABL_BUF(vnf_config, sizeof(vnf_cfg_t));
+   DU_ALLOC_SHRABL_BUF(vnf_config->vnf, sizeof(vnf_info));
+   DU_ALLOC_SHRABL_BUF(vnf_config->config, sizeof(nfapi_vnf_config_t));
 
    if (vnf_config == NULLP) return RFAILED;
 
-   extern vnf_cfg_t *nfapi_vnf_cfg; // defined in du_cfg.c
-   memcpy(vnf_config, nfapi_vnf_cfg, sizeof(vnf_cfg_t));
+   memcpy(vnf_config->vnf, vnf, sizeof(vnf_info));
+   memcpy(vnf_config->config, config, sizeof(nfapi_vnf_config_t));
 
    /* Fill Pst */
    FILL_PST_DUAPP_TO_MAC(pst, EVENT_MAC_VNF_CONFIG_REQ);
