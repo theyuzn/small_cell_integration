@@ -99,13 +99,12 @@ nfapi_vnf_pnf_info_t* nfapi_vnf_pnf_list_find(nfapi_vnf_config_t* config, int p5
 	while(curr != 0)
 	{
 		if(curr->p5_idx == p5_idx)
-                {
-                  NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s : curr->p5_idx:%d p5_idx:%d\n", __FUNCTION__, curr->p5_idx, p5_idx);
+        {
+            NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s : curr->p5_idx:%d p5_idx:%d\n", __FUNCTION__, curr->p5_idx, p5_idx);
 			return curr;
-                        }
+        }
 
-                NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s : curr->next:%p\n", __FUNCTION__, curr->next);
-
+            NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s : curr->next:%p\n", __FUNCTION__, curr->next);
 		curr = curr->next;
 	}
 
@@ -117,7 +116,7 @@ void vnf_nr_handle_pnf_param_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s : NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s : NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -136,7 +135,7 @@ void vnf_nr_handle_pnf_param_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_
 		}	
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 		
 		// make sure to release any dyanmic part of the message
@@ -150,7 +149,7 @@ void vnf_handle_pnf_param_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_con
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s : NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s : NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -169,7 +168,7 @@ void vnf_handle_pnf_param_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_con
 		}	
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 		
 		// make sure to release any dyanmic part of the message
@@ -184,7 +183,7 @@ void vnf_nr_handle_pnf_config_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -203,7 +202,7 @@ void vnf_nr_handle_pnf_config_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 		
 		// make sure to release any dyanmic part of the message
@@ -217,7 +216,7 @@ void vnf_handle_pnf_config_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_co
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -236,7 +235,7 @@ void vnf_handle_pnf_config_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_co
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 		
 		// make sure to release any dyanmic part of the message
@@ -250,7 +249,7 @@ void vnf_nr_handle_pnf_start_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -268,7 +267,7 @@ void vnf_nr_handle_pnf_start_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 		
 		// make sure to release any dyanmic part of the message
@@ -282,7 +281,7 @@ void vnf_handle_pnf_start_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_con
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -300,7 +299,7 @@ void vnf_handle_pnf_start_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_con
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 		
 		// make sure to release any dyanmic part of the message
@@ -314,7 +313,7 @@ void vnf_handle_pnf_stop_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_conf
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -332,7 +331,7 @@ void vnf_handle_pnf_stop_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_conf
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 
 		// make sure to release any dyanmic part of the message
@@ -348,7 +347,7 @@ void vnf_handle_param_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_config_
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -399,7 +398,7 @@ void vnf_handle_param_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_config_
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 		
 		// make sure to release any dyanmic part of the message
@@ -414,7 +413,7 @@ void vnf_nr_handle_param_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_conf
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -483,7 +482,7 @@ void vnf_nr_handle_param_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_conf
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 		
 		// make sure to release any dyanmic part of the message
@@ -499,7 +498,7 @@ void vnf_nr_handle_config_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_con
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -521,7 +520,7 @@ void vnf_nr_handle_config_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_con
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 	
 		// make sure to release any dyanmic part of the message
@@ -536,7 +535,7 @@ void vnf_handle_config_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_config
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -558,7 +557,7 @@ void vnf_handle_config_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_config
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 	
 		// make sure to release any dyanmic part of the message
@@ -572,7 +571,7 @@ void vnf_handle_start_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_config_
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{	
@@ -590,7 +589,7 @@ void vnf_handle_start_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_config_
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 
 		// make sure to release any dyanmic part of the message
@@ -604,7 +603,7 @@ void vnf_nr_handle_start_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_conf
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{	
@@ -624,7 +623,7 @@ void vnf_nr_handle_start_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_conf
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 
 		// make sure to release any dyanmic part of the message
@@ -639,7 +638,7 @@ void vnf_handle_stop_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_config_t
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -657,7 +656,7 @@ void vnf_handle_stop_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_config_t
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 	
 		// make sure to release any dyanmic part of the message
@@ -671,7 +670,7 @@ void vnf_handle_measurement_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_c
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -689,7 +688,7 @@ void vnf_handle_measurement_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_c
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 		
 		// make sure to release any dyanmic part of the message
@@ -703,7 +702,7 @@ void vnf_handle_rssi_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_config_t
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -721,7 +720,7 @@ void vnf_handle_rssi_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_config_t
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 		
 		// make sure to release any dyanmic part of the message
@@ -735,7 +734,7 @@ void vnf_handle_rssi_indication(void *pRecvMsg, int recvMsgLen, nfapi_vnf_config
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -753,7 +752,7 @@ void vnf_handle_rssi_indication(void *pRecvMsg, int recvMsgLen, nfapi_vnf_config
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 		
 		// make sure to release any dyanmic part of the message
@@ -767,7 +766,7 @@ void vnf_handle_cell_search_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_c
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -785,7 +784,7 @@ void vnf_handle_cell_search_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_c
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 		
 		// make sure to release any dyanmic part of the message
@@ -799,7 +798,7 @@ void vnf_handle_cell_search_indication(void *pRecvMsg, int recvMsgLen, nfapi_vnf
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "vnf_handle_cell_search_indication: NULL parameters\n");
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\nvnf_handle_cell_search_indication: NULL parameters\n");
 	}
 	else
 	{
@@ -817,7 +816,7 @@ void vnf_handle_cell_search_indication(void *pRecvMsg, int recvMsgLen, nfapi_vnf
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "vnf_handle_cell_search_response: Unpack message failed, ignoring\n");
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\nvnf_handle_cell_search_response: Unpack message failed, ignoring\n");
 		}
 		
 		// make sure to release any dyanmic part of the message
@@ -831,7 +830,7 @@ void vnf_handle_broadcast_detect_response(void *pRecvMsg, int recvMsgLen, nfapi_
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -849,7 +848,7 @@ void vnf_handle_broadcast_detect_response(void *pRecvMsg, int recvMsgLen, nfapi_
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 		
 		// make sure to release any dyanmic part of the message
@@ -863,7 +862,7 @@ void vnf_handle_broadcast_detect_indication(void *pRecvMsg, int recvMsgLen, nfap
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -881,7 +880,7 @@ void vnf_handle_broadcast_detect_indication(void *pRecvMsg, int recvMsgLen, nfap
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 			return;
 		}
 		
@@ -896,7 +895,7 @@ void vnf_handle_system_information_schedule_response(void *pRecvMsg, int recvMsg
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -914,7 +913,7 @@ void vnf_handle_system_information_schedule_response(void *pRecvMsg, int recvMsg
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 			
 		// make sure to release any dyanmic part of the message
@@ -928,7 +927,7 @@ void vnf_handle_system_information_schedule_indication(void *pRecvMsg, int recvM
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -946,7 +945,7 @@ void vnf_handle_system_information_schedule_indication(void *pRecvMsg, int recvM
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 	
 		// make sure to release any dyanmic part of the message
@@ -960,7 +959,7 @@ void vnf_handle_system_information_response(void *pRecvMsg, int recvMsgLen, nfap
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -978,7 +977,7 @@ void vnf_handle_system_information_response(void *pRecvMsg, int recvMsgLen, nfap
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 	
 		// make sure to release any dyanmic part of the message
@@ -992,7 +991,7 @@ void vnf_handle_system_information_indication(void *pRecvMsg, int recvMsgLen, nf
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -1003,7 +1002,7 @@ void vnf_handle_system_information_indication(void *pRecvMsg, int recvMsgLen, nf
 		// unpack the message
 		if (nfapi_p4_message_unpack(pRecvMsg, recvMsgLen, &msg, sizeof(msg), &config->codec_config) < 0)
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 			return;
 		}
 	
@@ -1023,7 +1022,7 @@ void vnf_handle_nmm_stop_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_conf
 	// ensure it's valid
 	if (pRecvMsg == NULL || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: NULL parameters\n", __FUNCTION__);
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: NULL parameters\n", __FUNCTION__);
 	}
 	else
 	{
@@ -1041,7 +1040,7 @@ void vnf_handle_nmm_stop_response(void *pRecvMsg, int recvMsgLen, nfapi_vnf_conf
 		}
 		else
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 		}
 		
 		// make sure to release any dyanmic part of the message
@@ -1070,7 +1069,7 @@ void vnf_handle_vendor_extension(void* pRecvMsg, int recvMsgLen, nfapi_vnf_confi
 			}
 			else
 			{
-				NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s: Unpack message failed, ignoring\n", __FUNCTION__);
+				NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s: Unpack message failed, ignoring\n", __FUNCTION__);
 			}
 			
 			config->deallocate_p4_p5_vendor_ext(msg);
@@ -1089,14 +1088,14 @@ void vnf_nr_handle_p4_p5_message(void *pRecvMsg, int recvMsgLen, int p5_idx, nfa
 	// validate the input params
 	if(pRecvMsg == NULL || recvMsgLen < NFAPI_HEADER_LENGTH || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "vnf_handle_p4_p5_message: invalid input params\n");
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\nvnf_handle_p4_p5_message: invalid input params\n");
 		return;
 	}
 
 	// unpack the message header
 	if (nfapi_p5_message_header_unpack(pRecvMsg, recvMsgLen, &messageHeader, sizeof(nfapi_p4_p5_message_header_t), &config->codec_config) < 0)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "Unpack message header failed, ignoring\n");
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\nUnpack message header failed, ignoring\n");
 		return;
 	}
 
@@ -1143,7 +1142,7 @@ void vnf_nr_handle_p4_p5_message(void *pRecvMsg, int recvMsgLen, int p5_idx, nfa
 				}
 				else
 				{
-					NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s P5 Unknown message ID %d\n", __FUNCTION__, messageHeader.message_id);
+					NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s P5 Unknown message ID %d\n", __FUNCTION__, messageHeader.message_id);
 				}
 			}
 			break;
@@ -1157,14 +1156,14 @@ void vnf_handle_p4_p5_message(void *pRecvMsg, int recvMsgLen, int p5_idx, nfapi_
 	// validate the input params
 	if(pRecvMsg == NULL || recvMsgLen < NFAPI_HEADER_LENGTH || config == NULL)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "vnf_handle_p4_p5_message: invalid input params\n");
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\nvnf_handle_p4_p5_message: invalid input params\n");
 		return;
 	}
 
 	// unpack the message header
 	if (nfapi_p5_message_header_unpack(pRecvMsg, recvMsgLen, &messageHeader, sizeof(nfapi_p4_p5_message_header_t), &config->codec_config) < 0)
 	{
-		NFAPI_TRACE(NFAPI_TRACE_ERROR, "Unpack message header failed, ignoring\n");
+		NFAPI_TRACE(NFAPI_TRACE_ERROR, "\nUnpack message header failed, ignoring\n");
 		return;
 	}
 
@@ -1259,7 +1258,7 @@ void vnf_handle_p4_p5_message(void *pRecvMsg, int recvMsgLen, int p5_idx, nfapi_
 				}
 				else
 				{
-					NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s P5 Unknown message ID %d\n", __FUNCTION__, messageHeader.message_id);
+					NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s P5 Unknown message ID %d\n", __FUNCTION__, messageHeader.message_id);
 				}
 			}
 			break;
@@ -1519,7 +1518,7 @@ static int vnf_send_p5_msg(nfapi_vnf_pnf_info_t* pnf, const void *msg, int len, 
 	// }
 	// printf("\n");
 
-	//NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s len:%d stream:%d\n", __FUNCTION__, len, stream);
+	//NFAPI_TRACE(NFAPI_TRACE_ERROR, "\n%s len:%d stream:%d\n", __FUNCTION__, len, stream);
 
 	int result = sctp_sendmsg(pnf->p5_sock, msg, len, (struct sockaddr*)&pnf->p5_pnf_sockaddr, sizeof(pnf->p5_pnf_sockaddr),1, 0, stream, 0, 4);
 
@@ -1528,7 +1527,7 @@ static int vnf_send_p5_msg(nfapi_vnf_pnf_info_t* pnf, const void *msg, int len, 
 		if(result <  0)
 		{
 			// error
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "sctp sendto failed errno: %d\n", errno);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\nsctp sendto failed errno: %d\n", errno);
 		}
 		else
 		{
@@ -1550,7 +1549,7 @@ int vnf_nr_pack_and_send_p5_message(vnf_t* vnf, uint16_t p5_idx, nfapi_p4_p5_mes
 
 		if (packedMessageLength < 0)
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "nfapi_p5_message_pack failed with return %d\n", packedMessageLength);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\nnfapi_p5_message_pack failed with return %d\n", packedMessageLength);
 			return -1;
 		}
 		return vnf_send_p5_msg(pnf, vnf->tx_message_buffer, packedMessageLength, 0);
@@ -1574,7 +1573,7 @@ int vnf_pack_and_send_p5_message(vnf_t* vnf, uint16_t p5_idx, nfapi_p4_p5_messag
 
 		if (packedMessageLength < 0)
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "nfapi_p5_message_pack failed with return %d\n", packedMessageLength);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\nnfapi_p5_message_pack failed with return %d\n", packedMessageLength);
 			return -1;
 		}
 
@@ -1599,7 +1598,7 @@ int vnf_pack_and_send_p4_message(vnf_t* vnf, uint16_t p5_idx, nfapi_p4_p5_messag
 
 		if (packedMessageLength < 0)
 		{
-			NFAPI_TRACE(NFAPI_TRACE_ERROR, "nfapi_p4_message_pack failed with return %d\n", packedMessageLength);
+			NFAPI_TRACE(NFAPI_TRACE_ERROR, "\nnfapi_p4_message_pack failed with return %d\n", packedMessageLength);
 			return -1;
 		}
 

@@ -74,7 +74,6 @@ int nfapi_nr_vnf_start(nfapi_vnf_config_t* config)
 
 	DU_LOG("\nINFO   --> [VNF INTERFACE] take action in %s", __FUNCTION__);
 
-
 	int p5ListenSock, p5Sock; 
 
 	struct sockaddr_in addr;

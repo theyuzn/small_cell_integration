@@ -1260,8 +1260,7 @@ void vnf_deallocate_p4_p5_vendor_ext(nfapi_p4_p5_message_header_t *header) {
 void vnf_nr_start_thread(void *ptr) {
   DU_LOG("\nINFO   --> [NFAPI VNF] Start VNF Thread\n");
   pthread_setname_np(pthread_self(), "VNF");
-  // set the global VNF config
-  config = (nfapi_vnf_config_t *)ptr; 
+  config = (nfapi_vnf_config_t *)ptr; // set the global VNF config
   nfapi_nr_vnf_start(config);
 }
 
@@ -1285,44 +1284,44 @@ void configure_nr_nfapi_vnf(char *vnf_addr, int vnf_p5_port, char *pnf_ip_addr, 
   DU_LOG("\nINFO   --> [NFAPI VNF]  VNF Address: %s:%d\n", __FUNCTION__, vnf_addr, vnf_p5_port);
 
   // VNF config
-  nfapi_vnf_config_t *config = nfapi_vnf_config_create();
-  config->malloc      = malloc;
-  config->free        = free;
-  config->vnf_p5_port = vnf_p5_port;
-  config->vnf_ipv4    = 1;
-  config->vnf_ipv6    = 0;
-  config->pnf_list    = 0;
-  config->phy_list    = 0;
+  nfapi_vnf_config_t *_config = nfapi_vnf_config_create();
+  _config->malloc      = malloc;
+  _config->free        = free;
+  _config->vnf_p5_port = vnf_p5_port;
+  _config->vnf_ipv4    = 1;
+  _config->vnf_ipv6    = 0;
+  _config->pnf_list    = 0;
+  _config->phy_list    = 0;
 
-  config->pnf_nr_connection_indication  = &pnf_nr_connection_indication_cb;
-  config->pnf_disconnect_indication     = &pnf_disconnection_indication_cb;
+  _config->pnf_nr_connection_indication  = &pnf_nr_connection_indication_cb;
+  _config->pnf_disconnect_indication     = &pnf_disconnection_indication_cb;
 
-  config->pnf_nr_param_resp   = &pnf_nr_param_resp_cb;
-  config->pnf_nr_config_resp  = &pnf_nr_config_resp_cb;
-  config->pnf_nr_start_resp   = &pnf_nr_start_resp_cb;
-  config->nr_param_resp       = &nr_param_resp_cb;
-  config->nr_config_resp      = &nr_config_resp_cb;
-  config->nr_start_resp       = &nr_start_resp_cb;
-  config->vendor_ext          = &vendor_ext_cb;
-  config->user_data           = &vnf;
+  _config->pnf_nr_param_resp   = &pnf_nr_param_resp_cb;
+  _config->pnf_nr_config_resp  = &pnf_nr_config_resp_cb;
+  _config->pnf_nr_start_resp   = &pnf_nr_start_resp_cb;
+  _config->nr_param_resp       = &nr_param_resp_cb;
+  _config->nr_config_resp      = &nr_config_resp_cb;
+  _config->nr_start_resp       = &nr_start_resp_cb;
+  _config->vendor_ext          = &vendor_ext_cb;
+  _config->user_data           = &vnf;
 
   // To allow custom vendor extentions to be added to nfapi
   /**************************************************************
   * For now, there is no need to complete the vendor extentions * 
   ***************************************************************/
-  config->codec_config.unpack_vendor_extension_tlv    = &vnf_unpack_vendor_extension_tlv;
-  config->codec_config.pack_vendor_extension_tlv      = &vnf_pack_vendor_extension_tlv;
-  config->codec_config.unpack_p4_p5_vendor_extension  = &vnf_unpack_p4_p5_vendor_extension;
-  config->codec_config.pack_p4_p5_vendor_extension    = &vnf_pack_p4_p5_vendor_extension;
-  config->allocate_p4_p5_vendor_ext                   = &vnf_allocate_p4_p5_vendor_ext;
-  config->deallocate_p4_p5_vendor_ext                 = &vnf_deallocate_p4_p5_vendor_ext;
+  _config->codec_config.unpack_vendor_extension_tlv    = &vnf_unpack_vendor_extension_tlv;
+  _config->codec_config.pack_vendor_extension_tlv      = &vnf_pack_vendor_extension_tlv;
+  _config->codec_config.unpack_p4_p5_vendor_extension  = &vnf_unpack_p4_p5_vendor_extension;
+  _config->codec_config.pack_p4_p5_vendor_extension    = &vnf_pack_p4_p5_vendor_extension;
+  _config->allocate_p4_p5_vendor_ext                   = &vnf_allocate_p4_p5_vendor_ext;
+  _config->deallocate_p4_p5_vendor_ext                 = &vnf_deallocate_p4_p5_vendor_ext;
   /**************************************************************/
 
-  config->codec_config.allocate     = &vnf_allocate;
-  config->codec_config.deallocate   = &vnf_deallocate;
+  _config->codec_config.allocate     = &vnf_allocate;
+  _config->codec_config.deallocate   = &vnf_deallocate;
   
   DU_LOG("\nINFO   --> [VNF] Creating VNF NFAPI start thread %s\n", __FUNCTION__);
-  pthread_create(&vnf_start_pthread, NULL, (void *)&vnf_nr_start_thread, config);
+  pthread_create(&vnf_start_pthread, NULL, (void *)&vnf_nr_start_thread, _config);
   DU_LOG("\nINFO   --> [VNF] Created VNF NFAPI start thread %s\n", __FUNCTION__);
 }
 
