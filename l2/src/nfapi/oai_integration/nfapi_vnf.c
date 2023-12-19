@@ -103,7 +103,6 @@ int pnf_connection_indication_cb(nfapi_vnf_config_t *config, int p5_idx) {
 
 int pnf_nr_connection_indication_cb(nfapi_vnf_config_t *config, int p5_idx) {
   DU_LOG("\nINFO   --> [VNF] pnf connection indication idx:%d\n", p5_idx);
-  // oai_create_gnb(); NFAPI
   nfapi_nr_pnf_param_request_t req;
   memset(&req, 0, sizeof(req));
   req.header.message_id = NFAPI_NR_PHY_MSG_TYPE_PNF_PARAM_REQUEST;
