@@ -66,9 +66,7 @@ void nfapi_trace(nfapi_trace_level_t level,
 {
     struct timespec ts;
     clock_gettime(CLOCK_MONOTONIC, &ts);
-    printf("\n%ld%06ld [%c] %10u: %s: ",
-           ts.tv_sec,
-           ts.tv_nsec / 1000,
+    printf("\nNFAPI %c   --> [NFAPI Trace] %10u: %s: ",
            "XEWNID"[level], // NFAPI_TRACE_NONE, NFAPI_TRACE_ERROR, ...
            (unsigned) pthread_self(),
            caller);

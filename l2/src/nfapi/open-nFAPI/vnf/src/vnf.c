@@ -1512,15 +1512,15 @@ int vnf_read_dispatch_message(nfapi_vnf_config_t* config, nfapi_vnf_pnf_info_t* 
 
 static int vnf_send_p5_msg(nfapi_vnf_pnf_info_t* pnf, const void *msg, int len, uint8_t stream)
 {
-	// printf("\n MESSAGE SENT: \n");
-	// for(int i=0; i<len; i++){
-	// 	printf("%d", *(uint8_t *)(msg + i));
-	// }
-	// printf("\n");
+	printf("\n MESSAGE SENT: \n");
+	for(int i=0; i<len; i++){
+		printf("%d", *(uint8_t *)(msg + i));
+	}
+	printf("\n");
 
-	//NFAPI_TRACE(NFAPI_TRACE_ERROR, "%s len:%d stream:%d\n", __FUNCTION__, len, stream);
-
+	NFAPI_TRACE(NFAPI_TRACE_INFO, "%s len:%d stream:%d\n", __FUNCTION__, len, stream);
 	int result = sctp_sendmsg(pnf->p5_sock, msg, len, (struct sockaddr*)&pnf->p5_pnf_sockaddr, sizeof(pnf->p5_pnf_sockaddr),1, 0, stream, 0, 4);
+	NFAPI_TRACE(NFAPI_TRACE_INFO, "sctp sendto with result %d\n", result);
 
 	if(result != len)
 	{
