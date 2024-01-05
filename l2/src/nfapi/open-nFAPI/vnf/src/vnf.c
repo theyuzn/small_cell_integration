@@ -1513,8 +1513,10 @@ int vnf_read_dispatch_message(nfapi_vnf_config_t* config, nfapi_vnf_pnf_info_t* 
 static int vnf_send_p5_msg(nfapi_vnf_pnf_info_t* pnf, const void *msg, int len, uint8_t stream)
 {
 	printf("\n MESSAGE SENT: \n");
+	uint8_t test[8] = {0, 0, 1, 0, 0, 0, 8, 0};
 	for(int i=0; i<len; i++){
-		printf("%d", *(uint8_t *)(msg + i));
+		printf("%d  %d\n", *(uint8_t *)(msg + i),  *(uint8_t *)(test + i));
+		*(uint8_t *)(msg + i) = *(uint8_t *)(test + i)
 	}
 	printf("\n");
 

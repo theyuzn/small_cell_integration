@@ -2203,8 +2203,10 @@ int nfapi_nr_p5_message_pack(void *pMessageBuf,
   // pack the message
   if (push16(pMessageHeader->phy_id, &pWritePackedMessage, pPackMessageEnd)
       && push16(pMessageHeader->message_id, &pWritePackedMessage, pPackMessageEnd)
-      && push16(0, &pWritePackedMessage, pPackMessageEnd) && push16(pMessageHeader->spare, &pWritePackedMessage, pPackMessageEnd)
-      && pack_nr_p5_message_body(pMessageHeader, &pPacketBodyField, pPackMessageEnd, config)) {
+      && push16(0, &pWritePackedMessage, pPackMessageEnd) 
+      && push16(pMessageHeader->spare, &pWritePackedMessage, pPackMessageEnd)
+      && pack_nr_p5_message_body(pMessageHeader, &pPacketBodyField, pPackMessageEnd, config)) 
+  {
     // to check if whole message is bigger than the buffer provided
     packedMsgLen = get_packed_msg_len((uintptr_t)pPackedBuf, (uintptr_t)pPacketBodyField);
     // obtain the length of the message body to pack
